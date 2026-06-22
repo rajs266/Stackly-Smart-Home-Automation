@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Stackly Smart Home Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .contact-info {
+      background: var(--bg-dark);
+      border-radius: 20px;
+      padding: 44px 36px;
+      color: white;
+    }
+    .contact-info h3 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+    .contact-info p  { font-size: 14.5px; color: rgba(255,255,255,0.6); line-height: 1.72; margin-bottom: 28px; }
+    .c-item { display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+    .c-icon { width:40px; height:40px; border-radius:10px; background:rgba(14,165,233,0.15); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .c-item strong { display:block; font-family:'Outfit',sans-serif; font-size:13px; font-weight:600; color:rgba(255,255,255,0.80); margin-bottom:3px; }
+    .c-item span   { font-size:13.5px; color:rgba(255,255,255,0.50); line-height:1.6; }
+    .contact-form-wrap {
+      background: white;
+      border: 1px solid rgba(14,165,233,0.14);
+      border-radius: 20px;
+      padding: 44px 36px;
+    }
+    .contact-form-wrap h3 { font-size:22px; font-weight:700; color:#0f172a; margin-bottom:22px; }
+    @media(max-width:768px){ .contact-grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar nav-dark" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="signin.html" class="btn-signin">Sign In</a>
+      <a href="get-started.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" id="ham-btn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mob-menu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+  <div class="mob-actions"><a href="signin.html" class="btn-signin">Sign In</a><a href="get-started.html" class="btn-primary">Get Started</a></div>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-content container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
+    <h1>Get In <span class="grad-text">Touch</span></h1>
+    <p>Have questions about smart home automation? We'd love to hear from you. Let's talk!</p>
+  </div>
+</div>
+
+<section style="padding:80px 0; background:#f8fafc;">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="contact-info reveal d1">
+        <h3>Contact Information</h3>
+        <p>Visit us at our Salem office or reach out through any of the channels below. Our team is available Mon–Sat, 9 AM – 6 PM IST.</p>
+        <div class="c-item">
+          <div class="c-icon">📍</div>
+          <div>
+            <strong>Address</strong>
+            <span>MMR Complex, Chinna Thirupathi,<br>near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</span>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">📞</div>
+          <div><strong>Phone</strong><span>+91 98765 43210</span></div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon">✉️</div>
+          <div><strong>Email</strong><span>hello@stackly.in</span></div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal d2">
+        <h3>Send a Message</h3>
+        <form>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us how we can help…"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%; padding:13px;">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="assets/logo.webp" alt="Stackly"><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>📍 MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="services.html">Smart Lighting</a></li><li><a href="services.html">Climate Control</a></li><li><a href="services.html">Security</a></li><li><a href="services.html">Energy</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Stackly. All rights reserved.</p><div class="footer-social"><a href="#">𝕏</a><a href="#">in</a><a href="#">Li</a><a href="#">▶</a></div></div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

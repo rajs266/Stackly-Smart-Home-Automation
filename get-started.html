@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started | Stackly Smart Home Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: #030814; min-height: 100vh; display: flex; flex-direction: column; }
+    .gs-page {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px 60px;
+    }
+    .gs-card {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 24px;
+      padding: 52px 44px;
+      width: 100%;
+      max-width: 520px;
+      backdrop-filter: blur(20px);
+    }
+    .gs-card .auth-logo { text-align:center; margin-bottom:24px; }
+    .gs-card .auth-logo img { height:40px; }
+    .gs-card h2 { font-size:26px; font-weight:700; color:white; text-align:center; margin-bottom:6px; }
+    .gs-card .sub { font-size:14px; color:rgba(255,255,255,0.5); text-align:center; margin-bottom:30px; }
+    .form-group label { color:rgba(255,255,255,0.75) !important; }
+    .form-group input, .form-group select {
+      background:rgba(255,255,255,0.06) !important;
+      border-color:rgba(255,255,255,0.12) !important;
+      color:white !important;
+    }
+    .form-group input::placeholder { color:rgba(255,255,255,0.3); }
+    .form-group input:focus { border-color:#0ea5e9 !important; }
+    .form-group select option { background:#0a1628; color:white; }
+    .row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .plan-btns { display:flex; gap:10px; margin-bottom:22px; }
+    .plan-btn {
+      flex:1; padding:13px 10px; border-radius:12px;
+      border:1.5px solid rgba(255,255,255,0.12);
+      background:transparent; color:rgba(255,255,255,0.60);
+      font-family:'Outfit',sans-serif; font-size:13.5px; font-weight:500;
+      cursor:pointer; transition:all 0.3s; text-align:center;
+    }
+    .plan-btn.selected, .plan-btn:hover {
+      border-color:#0ea5e9; color:#7dd3fc;
+      background:rgba(14,165,233,0.10);
+    }
+    .plan-label { font-family:'Outfit',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:10px; }
+    .auth-foot { text-align:center; margin-top:18px; font-size:14px; color:rgba(255,255,255,0.45); }
+    .auth-foot a { color:#7dd3fc; }
+    @media(max-width:480px){ .gs-card{padding:34px 22px;} .row-2{grid-template-columns:1fr;} .plan-btns{flex-direction:column;} }
+  </style>
+</head>
+<body>
+
+<nav class="navbar nav-dark" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="signin.html" class="btn-signin">Sign In</a>
+      <a href="get-started.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" id="ham-btn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mob-menu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+  <div class="mob-actions"><a href="signin.html" class="btn-signin">Sign In</a><a href="get-started.html" class="btn-primary">Get Started</a></div>
+</div>
+
+<div class="gs-page">
+  <div class="gs-card reveal">
+    <div class="auth-logo"><img src="assets/logo.webp" alt="Stackly"></div>
+    <h2>Get Started <span class="grad-text">Free</span></h2>
+    <p class="sub">Create your account and transform your home today</p>
+
+    <div class="plan-label">Choose Plan</div>
+    <div class="plan-btns">
+      <div class="plan-btn selected" onclick="selectPlan(this)">🏠 Starter<br><small style="font-size:11px;opacity:0.6">₹999/mo</small></div>
+      <div class="plan-btn" onclick="selectPlan(this)">⚡ Pro<br><small style="font-size:11px;opacity:0.6">₹1,999/mo</small></div>
+      <div class="plan-btn" onclick="selectPlan(this)">🏆 Enterprise<br><small style="font-size:11px;opacity:0.6">Custom</small></div>
+    </div>
+
+    <form>
+      <div class="row-2">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Raj"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Kumar"></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+      <div class="form-group"><label>Password</label><input type="password" placeholder="Create a strong password"></div>
+      <button type="submit" class="btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:4px;">
+        Create Free Account →
+      </button>
+    </form>
+
+    <div class="auth-foot">Already have an account? <a href="signin.html">Sign In</a></div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  function selectPlan(el) {
+    document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Stackly Smart Home Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+    .blog-card {
+      background: white;
+      border: 1px solid rgba(14,165,233,0.14);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 48px rgba(14,165,233,0.18);
+    }
+    .blog-img { width:100%; height:190px; object-fit:cover; transition: transform 0.5s; display:block; }
+    .blog-card:hover .blog-img { transform:scale(1.05); }
+    .blog-img-wrap { overflow:hidden; }
+    .blog-body { padding:22px 24px 26px; }
+    .blog-tag {
+      display:inline-block; font-family:'Outfit',sans-serif;
+      font-size:11px; font-weight:700; letter-spacing:0.1em;
+      text-transform:uppercase; color:#0ea5e9;
+      background:rgba(14,165,233,0.09); padding:4px 12px;
+      border-radius:100px; margin-bottom:12px;
+    }
+    .blog-body h3 { font-size:17px; font-weight:600; color:#0f172a; margin-bottom:9px; line-height:1.35; }
+    .blog-body p  { font-size:13.5px; color:#64748b; line-height:1.68; }
+    .blog-meta { font-size:12px; color:#94a3b8; margin-top:14px; font-family:'Outfit',sans-serif; }
+    @media(max-width:768px){ .blog-grid{ grid-template-columns:1fr; max-width:480px; margin:0 auto; } }
+    @media(max-width:1024px) and (min-width:769px){ .blog-grid{ grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar nav-dark" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="signin.html" class="btn-signin">Sign In</a>
+      <a href="get-started.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" id="ham-btn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mob-menu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+  <div class="mob-actions"><a href="signin.html" class="btn-signin">Sign In</a><a href="get-started.html" class="btn-primary">Get Started</a></div>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-content container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Blog</div>
+    <h1>Stackly <span class="grad-text">Blog</span></h1>
+    <p>Insights, tips and news on smart home automation, energy efficiency and the future of intelligent living.</p>
+  </div>
+</div>
+
+<section style="padding:80px 0; background:#f8fafc;">
+  <div class="container">
+    <div class="blog-grid">
+      <div class="blog-card reveal d1">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Blog 1" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag">Automation</span>
+          <h3>Top 10 Smart Home Automations for 2026</h3>
+          <p>Discover the most impactful automations that modern homeowners are setting up to save time and energy.</p>
+          <div class="blog-meta">June 15, 2026 · 5 min read</div>
+        </div>
+      </div>
+      <div class="blog-card reveal d2">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Blog 2" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag">Energy</span>
+          <h3>How Smart Thermostats Cut Energy Bills by 40%</h3>
+          <p>A deep dive into how AI-powered climate control learns your lifestyle and optimises energy usage automatically.</p>
+          <div class="blog-meta">June 8, 2026 · 7 min read</div>
+        </div>
+      </div>
+      <div class="blog-card reveal d3">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1557318041-1ce374d55ebf?w=600&q=80" alt="Blog 3" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag">Security</span>
+          <h3>Smart Security: Beyond CCTV Cameras</h3>
+          <p>Explore the latest AI-driven security features that go far beyond traditional surveillance — from facial recognition to predictive alerts.</p>
+          <div class="blog-meta">May 30, 2026 · 6 min read</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="assets/logo.webp" alt="Stackly"><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>📍 MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="services.html">Smart Lighting</a></li><li><a href="services.html">Climate Control</a></li><li><a href="services.html">Security</a></li><li><a href="services.html">Energy</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Stackly. All rights reserved.</p><div class="footer-social"><a href="#">𝕏</a><a href="#">in</a><a href="#">Li</a><a href="#">▶</a></div></div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
