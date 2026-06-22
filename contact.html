@@ -9,37 +9,97 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
+    .contact-section { background: var(--bg-light-3); padding: 100px 0; }
     .contact-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      max-width: 960px;
-      margin: 0 auto;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 48px;
+      align-items: start;
     }
     .contact-info {
       background: var(--bg-dark);
-      border-radius: 20px;
-      padding: 44px 36px;
+      border-radius: 24px;
+      padding: 48px 40px;
       color: white;
+      position: sticky;
+      top: 100px;
     }
-    .contact-info h3 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
-    .contact-info p  { font-size: 14.5px; color: rgba(255,255,255,0.6); line-height: 1.72; margin-bottom: 28px; }
-    .c-item { display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
-    .c-icon { width:40px; height:40px; border-radius:10px; background:rgba(14,165,233,0.15); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-    .c-item strong { display:block; font-family:'Outfit',sans-serif; font-size:13px; font-weight:600; color:rgba(255,255,255,0.80); margin-bottom:3px; }
-    .c-item span   { font-size:13.5px; color:rgba(255,255,255,0.50); line-height:1.6; }
+    .contact-info h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    .contact-info > p  { font-size: 14.5px; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 36px; }
+    .c-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+    .c-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border-radius: 12px;
+      background: rgba(14,165,233,0.14);
+      border: 1px solid rgba(14,165,233,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+    .c-item:hover .c-icon { background: var(--primary); color: white; transform: scale(1.06); }
+    .c-item strong { display: block; font-family: 'Outfit', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 4px; }
+    .c-item span { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+    .c-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 28px 0; }
+    .hours-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 13.5px; }
+    .hours-row:first-of-type { border-top: 1px solid rgba(255,255,255,0.08); }
+    .hours-row .day { color: rgba(255,255,255,0.65); font-family: 'Outfit', sans-serif; }
+    .hours-row .time { color: rgba(255,255,255,0.45); }
+    .hours-row.today .day { color: var(--primary); font-weight: 600; }
+    .hours-row.today .time { color: var(--primary-light); }
+
     .contact-form-wrap {
       background: white;
-      border: 1px solid rgba(14,165,233,0.14);
-      border-radius: 20px;
-      padding: 44px 36px;
+      border: 1px solid rgba(14,165,233,0.12);
+      border-radius: 24px;
+      padding: 48px 44px;
     }
-    .contact-form-wrap h3 { font-size:22px; font-weight:700; color:#0f172a; margin-bottom:22px; }
-    @media(max-width:768px){ .contact-grid{ grid-template-columns:1fr; } }
+    .contact-form-wrap h3 { font-size: 24px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .contact-form-wrap .sub { font-size: 14.5px; color: var(--text-muted); margin-bottom: 32px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contact-form-wrap .form-group input,
+    .contact-form-wrap .form-group textarea,
+    .contact-form-wrap .form-group select {
+      border-radius: 12px;
+    }
+    .service-chips {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px;
+    }
+    .chip {
+      padding: 7px 16px;
+      border: 1.5px solid var(--border-light);
+      border-radius: 100px;
+      font-family: 'Outfit', sans-serif; font-size: 12.5px; font-weight: 600;
+      color: var(--text-muted); background: white; cursor: none;
+      transition: var(--transition);
+    }
+    .chip:hover, .chip.selected {
+      background: rgba(14,165,233,0.08);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .chip-label { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+
+    /* Quick-contact cards */
+    .quick-contact { margin-top: 80px; }
+    .qc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; margin-top: 16px; }
+    .qc-card {
+      background: white; border: 1px solid var(--border-light);
+      border-radius: 18px; padding: 30px 24px; text-align: center;
+      transition: var(--transition);
+    }
+    .qc-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(14,165,233,.13); border-color: rgba(14,165,233,.28); }
+    .qc-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .qc-card h4 { font-size: 15px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .qc-card p  { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+    .qc-card a  { font-size: 13.5px; font-weight: 600; color: var(--primary); font-family: 'Outfit', sans-serif; }
+
+    @media(max-width:900px)  { .contact-grid { grid-template-columns: 1fr; } .contact-info { position: static; } .form-row { grid-template-columns: 1fr; } }
+    @media(max-width:768px)  { .contact-form-wrap { padding: 32px 24px; } .qc-grid { grid-template-columns: 1fr; max-width: 360px; margin-left:auto; margin-right:auto; } }
   </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar nav-dark" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
@@ -54,82 +114,203 @@
       <a href="signin.html" class="btn-signin">Sign In</a>
       <a href="get-started.html" class="btn-primary">Get Started</a>
     </div>
-    <button class="hamburger" id="ham-btn"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mob-menu">
-  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
-  <div class="mob-actions"><a href="signin.html" class="btn-signin">Sign In</a><a href="get-started.html" class="btn-primary">Get Started</a></div>
-</div>
-
-<div class="page-hero">
-  <div class="page-hero-content container">
-    <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
-    <h1>Get In <span class="grad-text">Touch</span></h1>
-    <p>Have questions about smart home automation? We'd love to hear from you. Let's talk!</p>
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+  <div class="mob-actions">
+    <a href="signin.html" class="btn-signin">Sign In</a>
+    <a href="get-started.html" class="btn-primary">Get Started</a>
   </div>
 </div>
 
-<section style="padding:80px 0; background:#f8fafc;">
+
+<!-- HERO WITH BG IMAGE -->
+<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=85')">
+  <div class="page-hero-content container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
+    <h1>Get In <span class="grad-text">Touch</span></h1>
+    <p>Have questions about smart home automation? We'd love to hear from you. Our team is ready to help — Mon to Sat, 9 AM to 6 PM IST.</p>
+  </div>
+</div>
+
+
+<!-- CONTACT SECTION -->
+<section class="contact-section">
   <div class="container">
     <div class="contact-grid">
 
-      <div class="contact-info reveal d1">
+      <!-- Left: Info Panel -->
+      <div class="contact-info slide-left">
         <h3>Contact Information</h3>
-        <p>Visit us at our Salem office or reach out through any of the channels below. Our team is available Mon–Sat, 9 AM – 6 PM IST.</p>
+        <p>Reach out through any of the channels below or visit us at our Salem office. We're always happy to help.</p>
+
         <div class="c-item">
-          <div class="c-icon">📍</div>
+          <div class="c-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
           <div>
-            <strong>Address</strong>
+            <strong>Visit Us</strong>
             <span>MMR Complex, Chinna Thirupathi,<br>near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</span>
           </div>
         </div>
+
         <div class="c-item">
-          <div class="c-icon">📞</div>
-          <div><strong>Phone</strong><span>+91 98765 43210</span></div>
+          <div class="c-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.91-1.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.72 15z"/></svg>
+          </div>
+          <div>
+            <strong>Call Us</strong>
+            <span><a href="tel:+919876543210" style="color:inherit;text-decoration:none;">+91 98765 43210</a></span>
+          </div>
         </div>
+
         <div class="c-item">
-          <div class="c-icon">✉️</div>
-          <div><strong>Email</strong><span>hello@stackly.in</span></div>
+          <div class="c-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <strong>Email Us</strong>
+            <span><a href="mailto:hello@stackly.in" style="color:inherit;text-decoration:none;">hello@stackly.in</a></span>
+          </div>
+        </div>
+
+        <div class="c-divider"></div>
+
+        <div style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:10px;">Business Hours</div>
+        <div class="hours-row today"><span class="day">Monday – Friday</span><span class="time">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Saturday</span><span class="time">9:00 AM – 4:00 PM</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="time">Closed</span></div>
+
+        <div class="c-divider"></div>
+        <div style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:14px;">Follow Us</div>
+        <div style="display:flex;gap:10px;">
+          <a href="404.html" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;transition:var(--transition);" aria-label="Twitter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;transition:var(--transition);" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="404.html" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;transition:var(--transition);" aria-label="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
         </div>
       </div>
 
-      <div class="contact-form-wrap reveal d2">
+      <!-- Right: Form -->
+      <div class="contact-form-wrap slide-right">
         <h3>Send a Message</h3>
+        <p class="sub">Fill in the form and our team will get back to you within 24 hours.</p>
+
+        <div class="chip-label">I'm interested in:</div>
+        <div class="service-chips">
+          <button class="chip selected" onclick="toggleChip(this)">Smart Lighting</button>
+          <button class="chip" onclick="toggleChip(this)">Climate Control</button>
+          <button class="chip" onclick="toggleChip(this)">Security</button>
+          <button class="chip" onclick="toggleChip(this)">Energy Management</button>
+          <button class="chip" onclick="toggleChip(this)">Entertainment</button>
+          <button class="chip" onclick="toggleChip(this)">Full Home Automation</button>
+        </div>
+
         <form>
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" placeholder="Your name">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Raj"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Kumar"></div>
           </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="your@email.com">
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea placeholder="Tell us how we can help…"></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="width:100%; padding:13px;">Send Message</button>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your home and what you'd like to automate&#8230;" style="height:120px;"></textarea></div>
+          <button type="submit" class="btn-primary" style="width:100%; padding:14px; font-size:15px;">
+            Send Message &rarr;
+          </button>
         </form>
       </div>
 
     </div>
+
+    <!-- Quick Contact Cards -->
+    <div class="quick-contact">
+      <div class="section-header" style="margin-bottom:0;">
+        <span class="section-tag reveal">Other Ways to Reach Us</span>
+        <h2 class="section-title reveal d1" style="margin-bottom:8px;">We're Always <span class="grad-text">Here to Help</span></h2>
+      </div>
+      <div class="qc-grid" style="margin-top:48px;">
+        <div class="qc-card reveal d1">
+          <div class="qc-icon vi-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.91-1.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.72 15z"/></svg>
+          </div>
+          <h4>Call Support</h4>
+          <p>Speak directly with our smart home experts for instant help.</p>
+          <a href="tel:+919876543210">+91 98765 43210 &rarr;</a>
+        </div>
+        <div class="qc-card reveal d2">
+          <div class="qc-icon vi-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h4>Live Chat</h4>
+          <p>Chat with us in real-time during business hours for quick answers.</p>
+          <a href="404.html">Start Chat &rarr;</a>
+        </div>
+        <div class="qc-card reveal d3">
+          <div class="qc-icon vi-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h4>Help Centre</h4>
+          <p>Browse our knowledge base with 200+ articles and how-to guides.</p>
+          <a href="404.html">Visit Help Centre &rarr;</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
+
+<!-- MAP SECTION -->
+<section style="background:white;padding:0;">
+  <div style="width:100%;height:380px;background:linear-gradient(135deg,#030814,#06103a);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(14,165,233,0.1),transparent 70%);"></div>
+    <div style="text-align:center;position:relative;z-index:1;padding:20px;">
+      <div style="width:60px;height:60px;border-radius:50%;background:var(--grad-primary);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 4px 24px rgba(14,165,233,0.4);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <h3 style="font-size:22px;font-weight:700;color:white;margin-bottom:8px;">Find Us in Salem</h3>
+      <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:22px;">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+      <a href="https://maps.google.com/?q=Salem,Tamil+Nadu" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block;">
+        Open in Google Maps &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><img src="assets/logo.webp" alt="Stackly"><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>📍 MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
-      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="services.html">Smart Lighting</a></li><li><a href="services.html">Climate Control</a></li><li><a href="services.html">Security</a></li><li><a href="services.html">Energy</a></li></ul></div>
-      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+      <div class="footer-brand"><a href="index.html" style="display: inline-block;"><img src="assets/logo.webp" alt="Stackly"></a><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="404.html">Smart Lighting</a></li><li><a href="404.html">Climate Control</a></li><li><a href="404.html">Security</a></li><li><a href="404.html">Energy</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="404.html">Privacy</a></li><li><a href="404.html">Terms</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><p>© 2026 Stackly. All rights reserved.</p><div class="footer-social"><a href="#">𝕏</a><a href="#">in</a><a href="#">Li</a><a href="#">▶</a></div></div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stackly. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="404.html" aria-label="Twitter X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="404.html" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="404.html" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="404.html" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg></a>
+      </div>
+    </div>
   </div>
 </footer>
 
 <script src="js/app.js"></script>
+<script>
+function toggleChip(el) { el.classList.toggle('selected'); }
+</script>
 </body>
 </html>

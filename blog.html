@@ -9,42 +9,110 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
+    .blog-section { background: var(--bg-light-3); padding: 100px 0; }
     .blog-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 26px;
+      gap: 28px;
     }
     .blog-card {
       background: white;
-      border: 1px solid rgba(14,165,233,0.14);
+      border: 1px solid rgba(14,165,233,0.12);
       border-radius: 20px;
       overflow: hidden;
-      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      flex-direction: column;
     }
     .blog-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 48px rgba(14,165,233,0.18);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 56px rgba(14,165,233,0.16);
+      border-color: rgba(14,165,233,0.3);
     }
-    .blog-img { width:100%; height:190px; object-fit:cover; transition: transform 0.5s; display:block; }
-    .blog-card:hover .blog-img { transform:scale(1.05); }
-    .blog-img-wrap { overflow:hidden; }
-    .blog-body { padding:22px 24px 26px; }
+    .blog-img-wrap { overflow: hidden; height: 200px; }
+    .blog-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+      display: block;
+    }
+    .blog-card:hover .blog-img { transform: scale(1.06); }
+    .blog-body { padding: 24px 26px 28px; flex: 1; display: flex; flex-direction: column; }
     .blog-tag {
-      display:inline-block; font-family:'Outfit',sans-serif;
-      font-size:11px; font-weight:700; letter-spacing:0.1em;
-      text-transform:uppercase; color:#0ea5e9;
-      background:rgba(14,165,233,0.09); padding:4px 12px;
-      border-radius:100px; margin-bottom:12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(14,165,233,0.09);
+      padding: 5px 13px; border-radius: 100px;
+      margin-bottom: 13px;
     }
-    .blog-body h3 { font-size:17px; font-weight:600; color:#0f172a; margin-bottom:9px; line-height:1.35; }
-    .blog-body p  { font-size:13.5px; color:#64748b; line-height:1.68; }
-    .blog-meta { font-size:12px; color:#94a3b8; margin-top:14px; font-family:'Outfit',sans-serif; }
-    @media(max-width:768px){ .blog-grid{ grid-template-columns:1fr; max-width:480px; margin:0 auto; } }
-    @media(max-width:1024px) and (min-width:769px){ .blog-grid{ grid-template-columns:repeat(2,1fr); } }
+    .blog-body h3 {
+      font-size: 17.5px; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 10px;
+      line-height: 1.38;
+      transition: color 0.3s;
+    }
+    .blog-card:hover .blog-body h3 { color: var(--primary); }
+    .blog-body p  { font-size: 14px; color: var(--text-muted); line-height: 1.72; flex: 1; }
+    .blog-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+    }
+    .blog-meta { font-size: 12.5px; color: #94a3b8; font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 6px; }
+    .blog-meta svg { color: #cbd5e1; }
+    .blog-read-link {
+      font-size: 13px; font-weight: 600; font-family: 'Outfit', sans-serif;
+      color: var(--primary); display: flex; align-items: center; gap: 5px;
+      transition: gap 0.3s;
+    }
+    .blog-card:hover .blog-read-link { gap: 8px; }
+
+    /* Featured article */
+    .blog-featured {
+      background: white;
+      border: 1px solid rgba(14,165,233,0.12);
+      border-radius: 24px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 48px;
+      transition: box-shadow 0.4s;
+    }
+    .blog-featured:hover { box-shadow: 0 20px 60px rgba(14,165,233,0.14); }
+    .blog-featured .feat-img-wrap { height: 100%; min-height: 320px; overflow: hidden; }
+    .blog-featured .feat-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+    .blog-featured:hover .feat-img-wrap img { transform: scale(1.04); }
+    .blog-featured-body { padding: 48px 44px; display: flex; flex-direction: column; justify-content: center; }
+    .feat-label { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .blog-featured-body h2 { font-size: clamp(20px, 2.5vw, 30px); font-weight: 800; color: var(--text-dark); line-height: 1.25; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .blog-featured-body p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 26px; }
+
+    /* Topics filter */
+    .topics { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+    .topic-btn {
+      padding: 8px 20px;
+      border: 1.5px solid var(--border-light);
+      border-radius: 100px;
+      font-family: 'Outfit', sans-serif; font-size: 13.5px; font-weight: 600;
+      color: var(--text-muted); background: white; cursor: none;
+      transition: var(--transition);
+    }
+    .topic-btn:hover, .topic-btn.active {
+      background: var(--primary); color: white; border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(14,165,233,0.3);
+    }
+
+    @media(max-width:1024px) { .blog-grid { grid-template-columns: repeat(2,1fr); } .blog-featured { grid-template-columns: 1fr; } .blog-featured .feat-img-wrap { min-height: 240px; } }
+    @media(max-width:640px)  { .blog-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } .blog-featured-body { padding: 32px 24px; } }
   </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar nav-dark" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
@@ -59,16 +127,22 @@
       <a href="signin.html" class="btn-signin">Sign In</a>
       <a href="get-started.html" class="btn-primary">Get Started</a>
     </div>
-    <button class="hamburger" id="ham-btn"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mob-menu">
-  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
-  <div class="mob-actions"><a href="signin.html" class="btn-signin">Sign In</a><a href="get-started.html" class="btn-primary">Get Started</a></div>
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+  <div class="mob-actions">
+    <a href="signin.html" class="btn-signin">Sign In</a>
+    <a href="get-started.html" class="btn-primary">Get Started</a>
+  </div>
 </div>
 
-<div class="page-hero">
+
+<!-- HERO WITH BG IMAGE -->
+<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=85')">
   <div class="page-hero-content container">
     <div class="breadcrumb"><a href="index.html">Home</a> / Blog</div>
     <h1>Stackly <span class="grad-text">Blog</span></h1>
@@ -76,52 +150,180 @@
   </div>
 </div>
 
-<section style="padding:80px 0; background:#f8fafc;">
+
+<!-- BLOG CONTENT -->
+<section class="blog-section">
   <div class="container">
-    <div class="blog-grid">
-      <div class="blog-card reveal d1">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Blog 1" loading="lazy"></div>
-        <div class="blog-body">
-          <span class="blog-tag">Automation</span>
-          <h3>Top 10 Smart Home Automations for 2026</h3>
-          <p>Discover the most impactful automations that modern homeowners are setting up to save time and energy.</p>
-          <div class="blog-meta">June 15, 2026 · 5 min read</div>
-        </div>
+
+    <!-- Featured Article -->
+    <div class="blog-featured slide-left">
+      <div class="feat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85" alt="Smart Home Automation 2026" loading="lazy">
       </div>
-      <div class="blog-card reveal d2">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Blog 2" loading="lazy"></div>
-        <div class="blog-body">
-          <span class="blog-tag">Energy</span>
-          <h3>How Smart Thermostats Cut Energy Bills by 40%</h3>
-          <p>A deep dive into how AI-powered climate control learns your lifestyle and optimises energy usage automatically.</p>
-          <div class="blog-meta">June 8, 2026 · 7 min read</div>
+      <div class="blog-featured-body">
+        <div class="feat-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Featured Article &nbsp;·&nbsp; Automation
         </div>
-      </div>
-      <div class="blog-card reveal d3">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1557318041-1ce374d55ebf?w=600&q=80" alt="Blog 3" loading="lazy"></div>
-        <div class="blog-body">
-          <span class="blog-tag">Security</span>
-          <h3>Smart Security: Beyond CCTV Cameras</h3>
-          <p>Explore the latest AI-driven security features that go far beyond traditional surveillance — from facial recognition to predictive alerts.</p>
-          <div class="blog-meta">May 30, 2026 · 6 min read</div>
+        <h2>Top 10 Smart Home Automations That Will Transform Your Life in 2026</h2>
+        <p>From wake-up routines that gently adjust lighting and temperature before your alarm, to smart security that recognises your family's faces — discover the 10 automations making the biggest difference in homes this year.</p>
+        <div class="blog-footer" style="border-top:1px solid rgba(14,165,233,.1);">
+          <div class="blog-meta">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            June 15, 2026 &nbsp;·&nbsp; 8 min read
+          </div>
+          <a href="404.html" class="blog-read-link">Read Article <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
     </div>
+
+    <!-- Topic Filter -->
+    <div class="topics reveal">
+      <button class="topic-btn active" onclick="setTopic(this)">All Topics</button>
+      <button class="topic-btn" onclick="setTopic(this)">Automation</button>
+      <button class="topic-btn" onclick="setTopic(this)">Energy</button>
+      <button class="topic-btn" onclick="setTopic(this)">Security</button>
+      <button class="topic-btn" onclick="setTopic(this)">Design</button>
+      <button class="topic-btn" onclick="setTopic(this)">How-To</button>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="blog-grid">
+
+      <div class="blog-card reveal d1">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Smart Thermostats" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Energy</span>
+          <h3>How Smart Thermostats Cut Energy Bills by 40%</h3>
+          <p>A deep dive into how AI-powered climate control learns your lifestyle and optimises energy usage automatically — saving you thousands every year.</p>
+          <div class="blog-footer">
+            <div class="blog-meta"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> June 8, 2026 · 7 min</div>
+            <a href="404.html" class="blog-read-link">Read <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d2">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1557318041-1ce374d55ebf?w=600&q=80" alt="Smart Security" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</span>
+          <h3>Smart Security: Beyond CCTV Cameras</h3>
+          <p>Explore the latest AI-driven security features — from facial recognition to predictive alerts — that go far beyond traditional surveillance.</p>
+          <div class="blog-footer">
+            <div class="blog-meta"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> May 30, 2026 · 6 min</div>
+            <a href="404.html" class="blog-read-link">Read <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d3">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&q=80" alt="Smart Bedroom" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg> Design</span>
+          <h3>Designing the Perfect Smart Bedroom Routine</h3>
+          <p>Wake up gently with automated sunrise lighting and drift off with the ideal sleep environment — your bedroom working for you, not against you.</p>
+          <div class="blog-footer">
+            <div class="blog-meta"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> May 22, 2026 · 5 min</div>
+            <a href="404.html" class="blog-read-link">Read <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d1">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80" alt="Voice Control" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg> How-To</span>
+          <h3>Getting the Most Out of Voice Control in Your Smart Home</h3>
+          <p>Master voice commands with Alexa, Google Home and Siri. Our complete guide to setting up custom routines that actually work.</p>
+          <div class="blog-footer">
+            <div class="blog-meta"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> May 14, 2026 · 9 min</div>
+            <a href="404.html" class="blog-read-link">Read <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d2">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=600&q=80" alt="Smart Kitchen" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Automation</span>
+          <h3>Smart Kitchen Appliances: A Complete 2026 Buying Guide</h3>
+          <p>From connected refrigerators to automated coffee machines, we review the best smart kitchen devices that integrate seamlessly with Stackly.</p>
+          <div class="blog-footer">
+            <div class="blog-meta"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> May 5, 2026 · 10 min</div>
+            <a href="404.html" class="blog-read-link">Read <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d3">
+        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=600&q=80" alt="Matter Protocol" loading="lazy"></div>
+        <div class="blog-body">
+          <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Technology</span>
+          <h3>Matter Protocol: Why It Matters for Your Smart Home</h3>
+          <p>The new universal smart home standard is here. We explain what Matter means for device compatibility and why it simplifies everything for homeowners.</p>
+          <div class="blog-footer">
+            <div class="blog-meta"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Apr 28, 2026 · 6 min</div>
+            <a href="404.html" class="blog-read-link">Read <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Load More -->
+    <div style="text-align:center;margin-top:52px;" class="fade-up">
+      <a href="404.html" class="btn-signin" style="padding:13px 36px;border-radius:var(--radius-btn);font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+        Load More Articles
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+
   </div>
 </section>
 
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-wrap">
+    <span class="section-tag on-dark reveal" style="display:block;margin-bottom:16px;">Stay Updated</span>
+    <h2 class="reveal d1">Never Miss an<br><span class="grad-text">Insight</span></h2>
+    <p class="reveal d2">Join 5,000+ smart home enthusiasts who get our weekly newsletter — tips, product updates and exclusive offers delivered straight to your inbox.</p>
+    <form class="newsletter-form reveal d3" onsubmit="return false;">
+      <input type="email" placeholder="Enter your email address">
+      <button type="submit">Subscribe &rarr;</button>
+    </form>
+    <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:14px;" class="fade-up">No spam, ever. Unsubscribe in one click.</p>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><img src="assets/logo.webp" alt="Stackly"><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>📍 MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
-      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="services.html">Smart Lighting</a></li><li><a href="services.html">Climate Control</a></li><li><a href="services.html">Security</a></li><li><a href="services.html">Energy</a></li></ul></div>
-      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+      <div class="footer-brand"><a href="index.html" style="display: inline-block;"><img src="assets/logo.webp" alt="Stackly"></a><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="404.html">Smart Lighting</a></li><li><a href="404.html">Climate Control</a></li><li><a href="404.html">Security</a></li><li><a href="404.html">Energy</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="404.html">Privacy</a></li><li><a href="404.html">Terms</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><p>© 2026 Stackly. All rights reserved.</p><div class="footer-social"><a href="#">𝕏</a><a href="#">in</a><a href="#">Li</a><a href="#">▶</a></div></div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stackly. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="404.html" aria-label="Twitter X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="404.html" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="404.html" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="404.html" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg></a>
+      </div>
+    </div>
   </div>
 </footer>
 
 <script src="js/app.js"></script>
+<script>
+function setTopic(btn) {
+  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
 </body>
 </html>

@@ -9,7 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body { background: #030814; min-height: 100vh; display: flex; flex-direction: column; }
+    body {
+      background: #030814;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(14,165,233,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 20%, rgba(99,102,241,0.07) 0%, transparent 55%);
+    }
     .gs-page {
       flex: 1;
       display: flex;
@@ -25,37 +33,51 @@
       width: 100%;
       max-width: 520px;
       backdrop-filter: blur(20px);
+      animation: card-fade 0.6s ease both;
     }
-    .gs-card .auth-logo { text-align:center; margin-bottom:24px; }
-    .gs-card .auth-logo img { height:40px; }
-    .gs-card h2 { font-size:26px; font-weight:700; color:white; text-align:center; margin-bottom:6px; }
-    .gs-card .sub { font-size:14px; color:rgba(255,255,255,0.5); text-align:center; margin-bottom:30px; }
-    .form-group label { color:rgba(255,255,255,0.75) !important; }
+    @keyframes card-fade { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .gs-card .auth-logo { text-align: center; margin-bottom: 24px; }
+    .gs-card .auth-logo img { height: 40px; }
+    .gs-card h2 { font-size: 26px; font-weight: 700; color: white; text-align: center; margin-bottom: 6px; }
+    .gs-card .sub { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 30px; }
+    .form-group label { color: rgba(255,255,255,0.75) !important; }
     .form-group input, .form-group select {
-      background:rgba(255,255,255,0.06) !important;
-      border-color:rgba(255,255,255,0.12) !important;
-      color:white !important;
+      background: rgba(255,255,255,0.06) !important;
+      border-color: rgba(255,255,255,0.12) !important;
+      color: white !important;
     }
-    .form-group input::placeholder { color:rgba(255,255,255,0.3); }
-    .form-group input:focus { border-color:#0ea5e9 !important; }
-    .form-group select option { background:#0a1628; color:white; }
-    .row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    .plan-btns { display:flex; gap:10px; margin-bottom:22px; }
+    .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group input:focus { border-color: #0ea5e9 !important; box-shadow: 0 0 0 3px rgba(14,165,233,0.15) !important; }
+    .form-group select option { background: #0a1628; color: white; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .plan-btns { display: flex; gap: 10px; margin-bottom: 22px; }
     .plan-btn {
-      flex:1; padding:13px 10px; border-radius:12px;
-      border:1.5px solid rgba(255,255,255,0.12);
-      background:transparent; color:rgba(255,255,255,0.60);
-      font-family:'Outfit',sans-serif; font-size:13.5px; font-weight:500;
-      cursor:pointer; transition:all 0.3s; text-align:center;
+      flex: 1;
+      padding: 14px 10px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      background: transparent;
+      color: rgba(255,255,255,0.60);
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px; font-weight: 500;
+      cursor: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
+    .plan-btn svg { flex-shrink: 0; }
     .plan-btn.selected, .plan-btn:hover {
-      border-color:#0ea5e9; color:#7dd3fc;
-      background:rgba(14,165,233,0.10);
+      border-color: #0ea5e9;
+      color: #7dd3fc;
+      background: rgba(14,165,233,0.10);
     }
-    .plan-label { font-family:'Outfit',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:10px; }
-    .auth-foot { text-align:center; margin-top:18px; font-size:14px; color:rgba(255,255,255,0.45); }
-    .auth-foot a { color:#7dd3fc; }
-    @media(max-width:480px){ .gs-card{padding:34px 22px;} .row-2{grid-template-columns:1fr;} .plan-btns{flex-direction:column;} }
+    .plan-label { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .auth-foot { text-align: center; margin-top: 18px; font-size: 14px; color: rgba(255,255,255,0.45); }
+    .auth-foot a { color: #7dd3fc; }
+    @media(max-width:480px) { .gs-card { padding: 34px 22px; } .row-2 { grid-template-columns: 1fr; } .plan-btns { flex-direction: column; } }
   </style>
 </head>
 <body>
@@ -74,26 +96,39 @@
       <a href="signin.html" class="btn-signin">Sign In</a>
       <a href="get-started.html" class="btn-primary">Get Started</a>
     </div>
-    <button class="hamburger" id="ham-btn"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mob-menu">
-  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
-  <div class="mob-actions"><a href="signin.html" class="btn-signin">Sign In</a><a href="get-started.html" class="btn-primary">Get Started</a></div>
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+  <div class="mob-actions">
+    <a href="signin.html" class="btn-signin">Sign In</a>
+    <a href="get-started.html" class="btn-primary">Get Started</a>
+  </div>
 </div>
 
 <div class="gs-page">
-  <div class="gs-card reveal">
-    <div class="auth-logo"><img src="assets/logo.webp" alt="Stackly"></div>
+  <div class="gs-card">
+    <a href="index.html" class="auth-logo" style="display:inline-block;"><img src="assets/logo.webp" alt="Stackly"></a>
     <h2>Get Started <span class="grad-text">Free</span></h2>
     <p class="sub">Create your account and transform your home today</p>
 
-    <div class="plan-label">Choose Plan</div>
+    <div class="plan-label">Choose Your Plan</div>
     <div class="plan-btns">
-      <div class="plan-btn selected" onclick="selectPlan(this)">🏠 Starter<br><small style="font-size:11px;opacity:0.6">₹999/mo</small></div>
-      <div class="plan-btn" onclick="selectPlan(this)">⚡ Pro<br><small style="font-size:11px;opacity:0.6">₹1,999/mo</small></div>
-      <div class="plan-btn" onclick="selectPlan(this)">🏆 Enterprise<br><small style="font-size:11px;opacity:0.6">Custom</small></div>
+      <div class="plan-btn selected" onclick="selectPlan(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Starter<br><small style="font-size:11px;opacity:0.6;">₹999/mo</small>
+      </div>
+      <div class="plan-btn" onclick="selectPlan(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Pro<br><small style="font-size:11px;opacity:0.6;">₹1,999/mo</small>
+      </div>
+      <div class="plan-btn" onclick="selectPlan(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Enterprise<br><small style="font-size:11px;opacity:0.6;">Custom</small>
+      </div>
     </div>
 
     <form>
@@ -104,8 +139,8 @@
       <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
       <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
       <div class="form-group"><label>Password</label><input type="password" placeholder="Create a strong password"></div>
-      <button type="submit" class="btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:4px;">
-        Create Free Account →
+      <button type="submit" class="btn-primary" style="width:100%; padding:13px; font-size:15px; margin-top:4px;">
+        Create Free Account &rarr;
       </button>
     </form>
 
@@ -114,11 +149,5 @@
 </div>
 
 <script src="js/app.js"></script>
-<script>
-  function selectPlan(el) {
-    document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-</script>
 </body>
 </html>

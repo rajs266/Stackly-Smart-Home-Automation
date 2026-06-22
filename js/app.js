@@ -63,6 +63,12 @@
     btn.classList.toggle('open', open);
     menu.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    
+    const backToTop = document.querySelector('.back-to-top');
+    if (backToTop) {
+      backToTop.style.display = open ? 'none' : '';
+    }
   }
 
   btn.addEventListener('click', () => toggle(!btn.classList.contains('open')));
@@ -74,6 +80,12 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') toggle(false);
   });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && btn.classList.contains('open')) {
+      toggle(false);
+    }
+  });
 })();
 
 
@@ -81,32 +93,17 @@
 (function () {
   const content = document.getElementById('hero-content');
   const video   = document.getElementById('hero-video');
-  const hero    = document.getElementById('hero');
-  if (!content || !video || !hero) return;
+  if (!content || !video) return;
 
-  let timer       = null;
-  let lastTime    = 0;
-
-  function show() {
-    content.classList.remove('hidden');
-    clearTimeout(timer);
-    timer = setTimeout(() => content.classList.add('hidden'), 5000);
-  }
-
-  show(); // initial reveal
+  video.load();
 
   video.addEventListener('timeupdate', () => {
-    const t = video.currentTime;
-    // Detect loop: current time jumped backwards more than 0.5s
-    if (t < lastTime - 0.5) show();
-    lastTime = t;
+    if (video.currentTime <= 7) {
+      content.classList.remove('hidden');
+    } else {
+      content.classList.add('hidden');
+    }
   });
-
-  // Re-show content when scrolling back to the top
-  const io = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) show();
-  }, { threshold: 0.1 });
-  io.observe(hero);
 })();
 
 
@@ -122,7 +119,8 @@
     });
   }, opts);
 
-  document.querySelectorAll('.reveal, .zoom-in').forEach(el => io.observe(el));
+  document.querySelectorAll('.reveal, .zoom-in, .slide-left, .slide-right, .fade-up')
+    .forEach(el => io.observe(el));
 })();
 
 
@@ -155,6 +153,73 @@
 })();
 
 
+/* ─────────────── SHARED FRAME LOADER (global pool) ─────────────── */
+const FrameLoader = (function () {
+  const cache   = window.__stacklyFrameCache || (window.__stacklyFrameCache = new Map());
+  const pending = new Map();
+  const queue   = [];
+  const MAX     = 24; // total parallel downloads across both sections
+  let active    = 0;
+
+  const missingUrls = [
+    'assets/section 1/frame_213.webp',
+    'assets/section 1/frame_232.webp',
+    'assets/section 1/frame_239.webp',
+    'assets/section 2/frame_263.webp',
+    'assets/section 2/frame_268.webp',
+    'assets/section 2/frame_271.webp'
+  ];
+
+  function pump() {
+    while (active < MAX && queue.length) {
+      const job = queue.shift();
+      active++;
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = () => {
+        cache.set(job.url, img);
+        pending.delete(job.url);
+        active--;
+        job.resolve(img);
+        pump();
+      };
+      img.onerror = () => {
+        const errObj = { error: true };
+        cache.set(job.url, errObj);
+        pending.delete(job.url);
+        active--;
+        job.resolve(errObj); // Resolve with dummy to avoid infinite 404 loops
+        pump();
+      };
+      img.src = job.url;
+    }
+  }
+
+  function load(url) {
+    // Skip known missing frames to prevent 404 console errors
+    if (missingUrls.includes(url)) {
+      const errObj = { error: true };
+      cache.set(url, errObj);
+      return Promise.resolve(errObj);
+    }
+
+    const hit = cache.get(url);
+    if (hit && (hit.error || (hit.complete && hit.naturalWidth))) return Promise.resolve(hit);
+
+    if (pending.has(url)) return pending.get(url);
+
+    const p = new Promise((resolve, reject) => {
+      queue.push({ url, resolve, reject });
+      pump();
+    });
+    pending.set(url, p);
+    return p;
+  }
+
+  return { load, cache };
+})();
+
+
 /* ─────────────── FRAME SCROLL ANIMATION ─────────────── */
 class FrameScrollAnim {
   constructor(cfg) {
@@ -168,12 +233,13 @@ class FrameScrollAnim {
     this.frameExt    = cfg.frameExt || '.jpg';
     this.panels      = cfg.panels  || [];
     this.bgStops     = cfg.bgStops || ['#030814'];
+    this.preloadDelay = cfg.preloadDelay || 0;
 
     if (!this.wrapper || !this.canvas) return;
 
     this.ctx         = this.canvas.getContext('2d');
     this.frames      = new Array(this.frameCount).fill(null);
-    this.loading     = new Set();
+    this._loadedCount = 0;
     this.curIdx      = 0;
     this.lastProg    = -1;
     this.firstLoaded = false;
@@ -181,37 +247,75 @@ class FrameScrollAnim {
     this._resize();
     window.addEventListener('resize', () => this._resize(), { passive: true });
 
-    // Preload first batch eagerly
-    for (let i = 0; i < Math.min(20, this.frameCount); i++) this._load(i);
+    // Show first frame ASAP (uses cache if head warm-up already fetched it)
+    this._load(0);
 
-    // RAF loop — only runs when wrapper is near viewport
     const io = new IntersectionObserver(([e]) => {
       this._visible = e.isIntersecting;
-    }, { rootMargin: '300px' });
+      if (e.isIntersecting) this._preloadAll();
+    }, { rootMargin: '800px' });
     io.observe(this.wrapper);
+
+    if (this.preloadDelay) {
+      setTimeout(() => this._preloadAll(), this.preloadDelay);
+    } else {
+      this._preloadAll();
+    }
 
     this._raf();
   }
 
   _frameSrc(i) {
-    return `${this.path}/${this.framePrefix}${String(i + 1).padStart(3, '0')}${this.frameExt}`;
+    const num = String(i + 1).padStart(3, '0');
+    return `${this.path}/${this.framePrefix}${num}${this.frameExt}`;
+  }
+
+  _onFrameReady(i, img) {
+    this.frames[i] = img;
+    this._loadedCount++;
+
+    if (i === 0 && !this.firstLoaded) {
+      this.firstLoaded = true;
+      if (this.loaderEl) this.loaderEl.style.display = 'none';
+      this._draw(0);
+    }
+
+    if (this.loaderEl && this.loaderEl.style.display !== 'none') {
+      const pct = Math.min(99, Math.round((this._loadedCount / this.frameCount) * 100));
+      const p = this.loaderEl.querySelector('p');
+      if (p) p.textContent = 'Loading… ' + pct + '%';
+    }
   }
 
   _load(i) {
-    if (i < 0 || i >= this.frameCount || this.frames[i] || this.loading.has(i)) return;
-    this.loading.add(i);
-    const img = new Image();
-    img.onload = () => {
-      this.frames[i] = img;
-      this.loading.delete(i);
-      if (!this.firstLoaded && i === 0) {
-        this.firstLoaded = true;
-        if (this.loaderEl) this.loaderEl.style.display = 'none';
-        this._draw(0);
-      }
-    };
-    img.onerror = () => this.loading.delete(i);
-    img.src = this._frameSrc(i);
+    if (i < 0 || i >= this.frameCount || this.frames[i]) return;
+
+    const url = this._frameSrc(i);
+    const cached = FrameLoader.cache.get(url);
+    if (cached && cached.complete && cached.naturalWidth) {
+      this._onFrameReady(i, cached);
+      return;
+    }
+
+    FrameLoader.load(url)
+      .then((img) => this._onFrameReady(i, img))
+      .catch(() => {});
+  }
+
+  /* Queue every frame in order — global pool keeps 24 downloads active */
+  _preloadAll() {
+    if (this._preloading) return;
+    this._preloading = true;
+
+    for (let i = 0; i < this.frameCount; i++) {
+      if (this.frames[i]) continue;
+      const idx = i;
+      FrameLoader.load(this._frameSrc(i))
+        .then((img) => {
+          if (!this.frames[idx]) this._onFrameReady(idx, img);
+        })
+        .catch(() => {});
+    }
   }
 
   _resize() {
@@ -234,16 +338,27 @@ class FrameScrollAnim {
 
   _draw(i) {
     const img = this.frames[i];
-    if (!img) return;
+    if (!img || img.error) return;
 
-    // canvas.width / canvas.height are already in physical pixels.
+    const imgW = img.naturalWidth  || img.width;
+    const imgH = img.naturalHeight || img.height;
+
+    // Ensure canvas buffer is at least the image's native resolution.
+    // This guarantees the image is always drawn 1:1 inside the canvas with
+    // zero in-canvas downscaling. The browser's compositor (GPU Lanczos/bicubic)
+    // then handles the final CSS display scale — it produces sharper results
+    // than canvas drawImage downscaling for large ratios.
+    if (this.canvas.width < imgW || this.canvas.height < imgH) {
+      this.canvas.width  = imgW;
+      this.canvas.height = imgH;
+    }
+
     const cw = this.canvas.width, ch = this.canvas.height;
-    const scale = Math.max(cw / img.width, ch / img.height);
-    const sw = img.width * scale, sh = img.height * scale;
+    const scale = Math.max(cw / imgW, ch / imgH);
+    const sw = imgW * scale, sh = imgH * scale;
 
-    // Use the highest-quality downscaling algorithm available.
-    this.ctx.imageSmoothingEnabled  = true;
-    this.ctx.imageSmoothingQuality  = 'high';
+    this.ctx.imageSmoothingEnabled = true;
+    this.ctx.imageSmoothingQuality = 'high';
 
     this.ctx.clearRect(0, 0, cw, ch);
     this.ctx.drawImage(img, (cw - sw) / 2, (ch - sh) / 2, sw, sh);
@@ -303,8 +418,8 @@ class FrameScrollAnim {
       this._draw(idx);
     }
 
-    // Preload surrounding frames
-    for (let i = idx - 4; i <= idx + 12; i++) this._load(i);
+    // Preload surrounding frames (wide window for smooth scroll)
+    for (let i = idx - 12; i <= idx + 30; i++) this._load(i);
 
     if (this.progressEl) this.progressEl.style.width = (prog * 100) + '%';
     this._updateBg(prog);
@@ -352,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     framePrefix: 'frame_',
     frameExt  : '.webp',
     bgStops   : ['#021220','#031a2e','#052035','#031420'],
+    preloadDelay: 400,
     panels: [
       { id: 's2-p1', start: 0.00, end: 0.36 },
       { id: 's2-p2', start: 0.33, end: 0.67 },
@@ -360,3 +476,185 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+
+/* ─────────────── CUSTOM CURSOR ─────────────── */
+(function () {
+  if (window.matchMedia('(pointer:coarse)').matches) return; // skip touch
+
+  const dot  = document.createElement('div');
+  const ring = document.createElement('div');
+  dot.className  = 'cur-dot';
+  ring.className = 'cur-ring';
+  document.body.appendChild(dot);
+  document.body.appendChild(ring);
+
+  let mx = -200, my = -200, rx = -200, ry = -200;
+
+  document.addEventListener('mousemove', e => { 
+    mx = e.clientX; 
+    my = e.clientY; 
+    if (dot.style.opacity === '0' || dot.style.opacity === '') {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
+    }
+  });
+
+  (function raf() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    dot.style.transform  = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(raf);
+  })();
+
+  const hoverSel = 'a, button, .feat-card, .svc-card, .testi-card, ' +
+                   '.hiw-card, .val-card, .team-card, .flip-card, ' +
+                   '.price-card, .plan-btn, input, textarea, label';
+
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest(hoverSel)) {
+      ring.classList.add('cur-expand');
+    }
+  });
+
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest(hoverSel)) {
+      ring.classList.remove('cur-expand');
+    }
+  });
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    ring.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+
+  window.addEventListener('focus', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+
+  document.addEventListener('mousedown', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+})();
+
+
+/* ─────────────── 3D CARD TILT ─────────────── */
+(function () {
+  const TILT_SEL = '.hiw-card, .val-card, .team-card, .stat-card';
+
+  document.querySelectorAll(TILT_SEL).forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  - 0.5) * 12;
+      const y = ((e.clientY - r.top)  / r.height - 0.5) * 12;
+      card.style.transform =
+        `perspective(700px) rotateX(${-y}deg) rotateY(${x}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+})();
+
+
+/* ─────────────── CLICK RIPPLE ─────────────── */
+(function () {
+  document.addEventListener('click', e => {
+    const r = document.createElement('div');
+    r.className = 'click-ripple';
+    r.style.left = e.clientX + 'px';
+    r.style.top  = e.clientY + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
+})();
+
+
+/* ─────────────── PLAN BUTTON SELECT ─────────────── */
+function selectPlan(el) {
+  document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+
+/* ─────────────── LINK & FORM ROUTING ─────────────── */
+(function () {
+  const NOT_FOUND = '404.html';
+
+  /* Catch any remaining empty / hash-only links */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = (a.getAttribute('href') || '').trim();
+    if (!href || href === '#' || href.startsWith('javascript:')) {
+      e.preventDefault();
+      window.location.href = NOT_FOUND;
+    }
+  });
+
+  /* Forms have no backend — route to 404 */
+  document.querySelectorAll('form').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      window.location.href = NOT_FOUND;
+    });
+  });
+
+  /* Standalone action buttons without a real destination */
+  document.querySelectorAll('.btn-google').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = NOT_FOUND;
+    });
+  });
+})();
+
+
+/* ─────────────── BACK TO TOP ─────────────── */
+(function () {
+  const btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+  document.body.appendChild(btn);
+
+  let visible = false;
+  const SHOW_AT = 400;
+
+  function toggle(show) {
+    if (show === visible) return;
+    visible = show;
+    btn.classList.toggle('show', show);
+  }
+
+  window.addEventListener('scroll', () => {
+    toggle(window.scrollY > SHOW_AT);
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  toggle(window.scrollY > SHOW_AT);
+})();
+
+/* ─────────────── DYNAMIC ACTIVE NAV LINK ─────────────── */
+(function() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu > a');
+  
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+})();

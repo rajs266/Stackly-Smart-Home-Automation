@@ -8,6 +8,44 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* About-page specific overrides */
+    .about-story    { background: var(--bg-light-3); padding: 100px 0; }
+    .about-values   { background: white; padding: 100px 0; }
+    .about-team     { background: var(--bg-light-3); padding: 100px 0; }
+    .about-stats    { background: var(--bg-dark); padding: 80px 0; }
+    .team-social    { display:flex; gap:10px; justify-content:center; margin-top:10px; }
+    .team-social a  { width:30px;height:30px;border-radius:8px;background:rgba(14,165,233,.1);color:var(--primary);display:flex;align-items:center;justify-content:center;transition:var(--transition); }
+    .team-social a:hover { background:var(--primary);color:white; }
+    .timeline { position:relative; padding:0 0 40px; }
+    .timeline::before { content:'';position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--primary),rgba(14,165,233,0.1)); }
+    .tl-item { display:grid;grid-template-columns:1fr 1fr;gap:60px;position:relative;margin-bottom:52px; }
+    .tl-item:nth-child(odd)  .tl-text { grid-column:1; text-align:right; }
+    .tl-item:nth-child(odd)  .tl-year { grid-column:2; }
+    .tl-item:nth-child(even) .tl-text { grid-column:2; text-align:left; }
+    .tl-item:nth-child(even) .tl-year { grid-column:1; grid-row:1; text-align:right; }
+    .tl-dot { position:absolute;left:50%;transform:translateX(-50%);top:6px;width:14px;height:14px;background:var(--primary);border-radius:50%;border:3px solid #030814;box-shadow:0 0 12px rgba(14,165,233,0.5); }
+    .tl-year { font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding-top:0; }
+    .tl-text h4 { font-size:17px;font-weight:700;color:white;margin-bottom:6px; }
+    .tl-text p  { font-size:13.5px;color:rgba(255,255,255,0.55);line-height:1.7; }
+    @media(max-width:768px){
+      .timeline::before{left:20px;}
+      .tl-item{grid-template-columns:1fr;gap:10px;padding-left:50px;}
+      .tl-item:nth-child(odd) .tl-text,
+      .tl-item:nth-child(even) .tl-text  { grid-column:1;text-align:left; }
+      .tl-item:nth-child(odd) .tl-year,
+      .tl-item:nth-child(even) .tl-year  { grid-column:1;grid-row:1;text-align:left; }
+      .tl-dot { left:20px; }
+    }
+    .faq-list { max-width: 800px; margin: 0 auto; display:flex;flex-direction:column;gap:14px; }
+    .faq-item { border:1px solid var(--border-light);border-radius:14px;overflow:hidden; }
+    .faq-q { padding:20px 24px;font-family:'Outfit',sans-serif;font-weight:600;font-size:15.5px;color:var(--text-dark);cursor:none;display:flex;justify-content:space-between;align-items:center;transition:background 0.3s; }
+    .faq-q:hover { background:rgba(14,165,233,.04); }
+    .faq-q svg { flex-shrink:0;transition:transform 0.4s;color:var(--primary); }
+    .faq-q.open svg { transform:rotate(180deg); }
+    .faq-a { padding:0 24px;max-height:0;overflow:hidden;transition:max-height 0.45s ease,padding 0.3s ease;font-size:14.5px;color:var(--text-muted);line-height:1.75; }
+    .faq-a.open { max-height:200px;padding:0 24px 20px; }
+  </style>
 </head>
 <body>
 
@@ -23,7 +61,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-actions">
-      <a href="signin.html"      class="btn-signin">Sign In</a>
+      <a href="signin.html" class="btn-signin">Sign In</a>
       <a href="get-started.html" class="btn-primary">Get Started</a>
     </div>
     <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -31,64 +69,304 @@
 </nav>
 
 <div class="mobile-menu" id="mob-menu">
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="services.html">Services</a>
-  <a href="blog.html">Blog</a>
-  <a href="contact.html">Contact</a>
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
   <div class="mob-actions">
     <a href="signin.html" class="btn-signin">Sign In</a>
     <a href="get-started.html" class="btn-primary">Get Started</a>
   </div>
 </div>
 
-<!-- PAGE HERO -->
-<div class="page-hero">
+
+<!-- HERO WITH BG IMAGE -->
+<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=85')">
   <div class="page-hero-content container">
     <div class="breadcrumb"><a href="index.html">Home</a> / About</div>
     <h1><span class="grad-text">About</span> Stackly</h1>
-    <p>We're on a mission to make every home intelligent, secure and energy-efficient — built right here in Salem, Tamil Nadu.</p>
+    <p>We are on a mission to make every home intelligent, secure and energy-efficient — built right here in Salem, Tamil Nadu, for India and beyond.</p>
   </div>
 </div>
 
-<!-- CONTENT -->
-<section class="simple-section">
+
+<!-- ABOUT: MISSION / STORY -->
+<section class="about-story">
   <div class="container">
-    <div class="simple-card reveal">
-      <h2>Our <span class="grad-text">Story</span></h2>
-      <p>
-        Founded in Salem, Tamil Nadu, Stackly was born from a simple belief: every home deserves intelligent automation.
-        We combine cutting-edge AI with elegant design to deliver smart home solutions that genuinely improve daily life —
-        from automated lighting and climate control to advanced security and energy management.
-      </p>
-      <p style="margin-top:14px; color:#64748b; font-size:15px; line-height:1.72;">
-        📍 MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008
-      </p>
-      <a href="contact.html" class="btn-primary" style="display:inline-block; margin-top:12px;">Get In Touch</a>
+    <div class="mission-grid">
+      <div class="mission-img slide-left">
+        <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=800&q=85" alt="Smart home interior with Stackly automation">
+        <div class="mission-badge">
+          <strong>5+</strong>
+          <span>Years of Excellence</span>
+        </div>
+      </div>
+      <div class="mission-text slide-right">
+        <span class="section-tag">Our Story</span>
+        <h2>Born From a Simple <span class="grad-text">Belief</span></h2>
+        <p>Founded in Salem, Tamil Nadu in 2021, Stackly began with a simple belief: every home deserves intelligent automation that works seamlessly with daily life — not against it.</p>
+        <p>Our founders noticed that smart home technology was either too complex, too expensive or simply not designed for Indian homes. Stackly was created to change that — combining cutting-edge AI with elegant, practical design.</p>
+        <p>Today we serve thousands of homeowners across Tamil Nadu and beyond, delivering solutions that genuinely improve daily life — from automated lighting and climate control to advanced security and energy management.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:26px;">
+          <a href="contact.html" class="btn-primary">Contact Us &rarr;</a>
+          <a href="services.html" class="btn-signin" style="padding:12px 24px;border-radius:var(--radius-btn);display:inline-block;border:2px solid var(--primary);">Our Services</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+
+<!-- ABOUT: VALUES -->
+<section class="about-values">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">What We Stand For</span>
+      <h2 class="section-title reveal d1">Our Core <span class="grad-text">Values</span></h2>
+      <p class="section-desc reveal d2">The principles that guide everything we build, every customer we serve and every innovation we pursue.</p>
+    </div>
+    <div class="val-grid">
+      <div class="val-card reveal d1">
+        <div class="val-icon vi-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+        </div>
+        <h3>Innovation First</h3>
+        <p>We relentlessly pursue the latest advances in AI and IoT to bring future-proof solutions to every home we touch.</p>
+      </div>
+      <div class="val-card reveal d2">
+        <div class="val-icon vi-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Customer Centricity</h3>
+        <p>Every feature, every design decision and every support interaction centres on making our customers' lives genuinely better.</p>
+      </div>
+      <div class="val-card reveal d3">
+        <div class="val-icon vi-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Trust & Security</h3>
+        <p>We build with privacy and security at the core, ensuring your data and your home are always fully protected.</p>
+      </div>
+      <div class="val-card reveal d1">
+        <div class="val-icon vi-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Sustainability</h3>
+        <p>Our solutions reduce energy consumption and carbon footprints — making smart homes a force for a greener planet.</p>
+      </div>
+      <div class="val-card reveal d2">
+        <div class="val-icon vi-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Reliability</h3>
+        <p>99.9% uptime, round-the-clock support and hardware built to last — because your home security never gets a day off.</p>
+      </div>
+      <div class="val-card reveal d3">
+        <div class="val-icon vi-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Continuous Growth</h3>
+        <p>We invest in ongoing R&amp;D so your Stackly system keeps getting smarter with every update — automatically, at no extra cost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT: TEAM -->
+<section class="about-team">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">Our People</span>
+      <h2 class="section-title reveal d1">Meet the <span class="grad-text">Team</span></h2>
+      <p class="section-desc reveal d2">The passionate engineers, designers and support specialists behind every Stackly experience.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal d1">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Arjun Mehta — CEO & Co-founder" loading="lazy">
+          <div class="team-overlay"></div>
+        </div>
+        <div class="team-body">
+          <h4>Arjun Mehta</h4>
+          <span>CEO &amp; Co-founder</span>
+          <div class="team-social">
+            <a href="404.html" aria-label="LinkedIn"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="404.html" aria-label="Twitter"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal d2">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Priya Rajan — CTO" loading="lazy">
+          <div class="team-overlay"></div>
+        </div>
+        <div class="team-body">
+          <h4>Priya Rajan</h4>
+          <span>Chief Technology Officer</span>
+          <div class="team-social">
+            <a href="404.html" aria-label="LinkedIn"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="404.html" aria-label="Twitter"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal d3">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Karthik Sundaram — Head of Engineering" loading="lazy">
+          <div class="team-overlay"></div>
+        </div>
+        <div class="team-body">
+          <h4>Karthik Sundaram</h4>
+          <span>Head of Engineering</span>
+          <div class="team-social">
+            <a href="404.html" aria-label="LinkedIn"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="404.html" aria-label="Twitter"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal d1">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Kavitha Nair — Product Designer" loading="lazy">
+          <div class="team-overlay"></div>
+        </div>
+        <div class="team-body">
+          <h4>Kavitha Nair</h4>
+          <span>Lead Product Designer</span>
+          <div class="team-social">
+            <a href="404.html" aria-label="LinkedIn"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="404.html" aria-label="Twitter"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT: STATS -->
+<section class="about-stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card zoom-in d1"><div class="stat-num" data-target="10000" data-suffix="+">0</div><div class="stat-lbl">Happy Customers</div></div>
+      <div class="stat-card zoom-in d2"><div class="stat-num" data-target="5" data-suffix="+ Yrs">0</div><div class="stat-lbl">Industry Experience</div></div>
+      <div class="stat-card zoom-in d3"><div class="stat-num" data-target="50" data-suffix="+">0</div><div class="stat-lbl">Expert Team Members</div></div>
+      <div class="stat-card zoom-in d4"><div class="stat-num" data-target="15" data-suffix="+">0</div><div class="stat-lbl">Cities Served</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT: JOURNEY TIMELINE -->
+<section style="background:var(--bg-dark);padding:100px 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag on-dark reveal">Our Journey</span>
+      <h2 class="section-title on-dark reveal d1">Building the<br><span class="grad-text">Future of Homes</span></h2>
+      <p class="section-desc on-dark reveal d2">Key milestones on our path to becoming India's most trusted smart home brand.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021</div>
+        <div class="tl-text"><h4>Stackly Founded</h4><p>Our founders launch Stackly in Salem with a mission to democratise smart home technology in India.</p></div>
+      </div>
+      <div class="tl-item reveal d1">
+        <div class="tl-dot"></div>
+        <div class="tl-text"><h4>First 500 Installations</h4><p>Reached our first milestone of 500 homes in Tamil Nadu, proving the market demand for affordable smart automation.</p></div>
+        <div class="tl-year">2022</div>
+      </div>
+      <div class="tl-item reveal d2">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2023</div>
+        <div class="tl-text"><h4>AI Platform Launch</h4><p>Released our proprietary AI engine, introducing adaptive automation that learns from daily habits and routines.</p></div>
+      </div>
+      <div class="tl-item reveal d3">
+        <div class="tl-dot"></div>
+        <div class="tl-text"><h4>10,000 Homes Milestone</h4><p>Crossed 10,000 active installations and expanded to 15+ cities, becoming one of South India's top smart home providers.</p></div>
+        <div class="tl-year">2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT: FAQ -->
+<section style="background:var(--bg-light-3);padding:100px 0;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag reveal">FAQs</span>
+      <h2 class="section-title reveal d1">Frequently Asked<br><span class="grad-text">Questions</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal d1">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How long does installation take?
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">A standard home installation typically takes 1–2 days. For larger properties or custom setups, our team will provide an accurate timeline during the free consultation.</div>
+      </div>
+      <div class="faq-item reveal d2">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do I need to replace all my existing devices?
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Not at all! Stackly integrates seamlessly with most existing appliances and smart devices including Amazon Alexa, Google Home, Apple HomeKit and 500+ IoT devices.</div>
+      </div>
+      <div class="faq-item reveal d3">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What happens if I lose internet connectivity?
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Our systems have local fallback mode — core functions like lights, locks and automation schedules continue working without internet. Cloud features like remote access and alerts require connectivity.</div>
+      </div>
+      <div class="faq-item reveal d1">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is there a monthly subscription fee?
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Yes, we offer flexible plans starting at ₹999/month that include cloud access, AI automation, remote monitoring and 24/7 support. Hardware is a one-time purchase.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="assets/logo.webp" alt="Stackly">
+        <a href="index.html" style="display: inline-block;">
+          <img src="assets/logo.webp" alt="Stackly">
+        </a>
         <p>Premium smart home automation solutions engineered for modern living.</p>
-        <div class="footer-addr"><strong>📍 MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div>
+        <div class="footer-addr"><strong>MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div>
       </div>
-      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="services.html">Smart Lighting</a></li><li><a href="services.html">Climate Control</a></li><li><a href="services.html">Security</a></li><li><a href="services.html">Energy</a></li></ul></div>
-      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="404.html">Smart Lighting</a></li><li><a href="404.html">Climate Control</a></li><li><a href="404.html">Security</a></li><li><a href="404.html">Energy</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="404.html">Privacy Policy</a></li><li><a href="404.html">Terms of Service</a></li></ul></div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Stackly. All rights reserved.</p>
-      <div class="footer-social"><a href="#">𝕏</a><a href="#">in</a><a href="#">Li</a><a href="#">▶</a></div>
+      <p>&copy; 2026 Stackly. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="404.html" aria-label="Twitter X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="404.html" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="404.html" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="404.html" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg></a>
+      </div>
     </div>
   </div>
 </footer>
 
 <script src="js/app.js"></script>
+<script>
+function toggleFaq(btn) {
+  const ans = btn.nextElementSibling;
+  const isOpen = ans.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(a => {
+    a.classList.remove('open');
+    a.previousElementSibling.classList.remove('open');
+  });
+  if (!isOpen) { ans.classList.add('open'); btn.classList.add('open'); }
+}
+</script>
 </body>
 </html>
