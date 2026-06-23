@@ -51,6 +51,53 @@
     .form-group input:focus { border-color: #0ea5e9 !important; box-shadow: 0 0 0 3px rgba(14,165,233,0.15) !important; }
     .forgot { text-align: right; margin-top: -12px; margin-bottom: 20px; }
     .forgot a { font-size: 13px; color: #7dd3fc; font-family: 'Outfit', sans-serif; }
+    .auth-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: -8px 0 20px;
+      flex-wrap: wrap;
+    }
+    .auth-check {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.45;
+    }
+    .auth-check input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #0ea5e9;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .auth-check a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+    .auth-check a:hover { text-decoration: underline; }
+    .forgot-link {
+      font-size: 13px;
+      color: #7dd3fc;
+      font-family: 'Outfit', sans-serif;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .forgot-link:hover { text-decoration: underline; }
+    .auth-terms { margin: 16px 0 20px; }
+    .terms-error {
+      color: #ef4444;
+      font-size: 13px;
+      margin: -12px 0 16px;
+      display: none;
+      font-family: 'Outfit', sans-serif;
+    }
     .divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
     .divider span { font-size: 12px; color: rgba(255,255,255,0.35); white-space: nowrap; }
@@ -126,17 +173,29 @@
       width: 100%; max-width: 400px; background: none; border: none; padding: 0;
       box-shadow: none; animation: card-fade 0.6s ease both;
     }
+    .auth-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+    .auth-top-logo { display: inline-flex; line-height: 0; }
+    .auth-top-logo img { height: 36px; }
     .auth-back-home {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 0;
+      margin-left: auto;
       font-family: 'Outfit', sans-serif;
       font-size: 14px;
       font-weight: 500;
       color: rgba(255,255,255,0.65);
       text-decoration: none;
       transition: color 0.2s ease;
+      white-space: nowrap;
     }
     .auth-back-home:hover { color: #7dd3fc; }
     .auth-back-home svg { flex-shrink: 0; }
@@ -174,10 +233,13 @@
   
   <div class="split-right">
     <div class="auth-card">
-      <a href="index.html" class="auth-back-home">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Back to Home
-      </a>
+      <div class="auth-top-bar">
+        <a href="index.html" class="auth-top-logo"><img src="assets/logo.webp" alt="Stackly"></a>
+        <a href="index.html" class="auth-back-home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </a>
+      </div>
       <h2 style="font-size:28px; margin-bottom:8px; text-align:left;">Sign In</h2>
       <p class="sub" style="margin-bottom:30px; text-align:left;">Access your Stackly account</p>
 
@@ -208,7 +270,13 @@
             </button>
           </div>
         </div>
-        <div class="forgot"><a href="404.html">Forgot password?</a></div>
+        <div class="auth-options">
+          <label class="auth-check">
+            <input type="checkbox" id="si-remember">
+            <span>Remember me</span>
+          </label>
+          <a href="404.html" class="forgot-link">Forgot password?</a>
+        </div>
         <div id="si-error" style="color:#ef4444; font-size:13px; margin-bottom:12px; display:none; text-align:center;"></div>
         <button type="submit" class="btn-primary" style="width:100%; padding:13px; font-size:15px;">Sign In &rarr;</button>
       </form>
@@ -269,7 +337,12 @@
             loggedIn: true
           };
 
-          localStorage.setItem('stackly_user', JSON.stringify(user));
+          const remember = document.getElementById('si-remember').checked;
+          if (remember) {
+            localStorage.setItem('stackly_user', JSON.stringify(user));
+          } else {
+            localStorage.removeItem('stackly_user');
+          }
           sessionStorage.setItem('stackly_user', JSON.stringify(user));
           sessionStorage.removeItem('stackly_auth');
 

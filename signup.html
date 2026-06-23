@@ -99,6 +99,37 @@
     .btn-social:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); }
     .auth-foot { text-align: center; margin-top: 18px; font-size: 14px; color: rgba(255,255,255,0.45); }
     .auth-foot a { color: #7dd3fc; }
+    .auth-check {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.45;
+    }
+    .auth-check input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #0ea5e9;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .auth-check a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+    .auth-check a:hover { text-decoration: underline; }
+    .auth-terms { margin: 24px 0 28px; }
+    .terms-error {
+      color: #ef4444;
+      font-size: 13px;
+      margin: -20px 0 24px;
+      display: none;
+      font-family: 'Outfit', sans-serif;
+    }
     
     .split-layout { display: flex; width: 100vw; min-height: 100vh; }
     .split-left {
@@ -123,17 +154,29 @@
       width: 100%; max-width: 440px; background: none; border: none; padding: 0;
       box-shadow: none; animation: card-fade 0.6s ease both;
     }
+    .auth-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+    .auth-top-logo { display: inline-flex; line-height: 0; }
+    .auth-top-logo img { height: 36px; }
     .auth-back-home {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 0;
+      margin-left: auto;
       font-family: 'Outfit', sans-serif;
       font-size: 14px;
       font-weight: 500;
       color: rgba(255,255,255,0.65);
       text-decoration: none;
       transition: color 0.2s ease;
+      white-space: nowrap;
     }
     .auth-back-home:hover { color: #7dd3fc; }
     .auth-back-home svg { flex-shrink: 0; }
@@ -167,10 +210,13 @@
   
   <div class="split-right">
     <div class="gs-card">
-      <a href="index.html" class="auth-back-home">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Back to Home
-      </a>
+      <div class="auth-top-bar">
+        <a href="index.html" class="auth-top-logo"><img src="assets/logo.webp" alt="Stackly"></a>
+        <a href="index.html" class="auth-back-home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </a>
+      </div>
       <h2 style="font-size:28px; margin-bottom:8px; text-align:left;">Get Started <span class="grad-text">Free</span></h2>
       <p class="sub" style="margin-bottom:30px; text-align:left;">Create your account and transform your home</p>
 
@@ -232,7 +278,13 @@
           <div class="error-text"></div>
         </div>
 
-        <button type="submit" class="btn-primary" style="width:100%; padding:13px; font-size:15px; margin-top:4px;">
+        <label class="auth-check auth-terms">
+          <input type="checkbox" id="su-terms">
+          <span>I agree to the <a href="404.html" onclick="event.stopPropagation()">Terms and Conditions</a> and <a href="404.html" onclick="event.stopPropagation()">Privacy Policy</a></span>
+        </label>
+        <div class="terms-error" id="su-terms-error">Please accept the Terms and Conditions</div>
+
+        <button type="submit" class="btn-primary" style="width:100%; padding:13px; font-size:15px;">
           Create Account &rarr;
         </button>
       </form>
@@ -365,10 +417,16 @@
       else if (pass !== cpass) setError('su-cpass', 'Passwords do not match');
       else setError('su-cpass', '');
 
+      const termsEl = document.getElementById('su-terms');
+      const termsErr = document.getElementById('su-terms-error');
+      if (!termsEl.checked) {
+        termsErr.style.display = 'block';
+        isValid = false;
+      } else {
+        termsErr.style.display = 'none';
+      }
+
       if (!isValid) return;
-
-
-      const toast = document.getElementById('su-success');
       toast.classList.add('show');
       
       setTimeout(() => {
