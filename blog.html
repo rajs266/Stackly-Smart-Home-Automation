@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp" sizes="32x32">
   <title>Blog | Stackly Smart Home Automation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
   <style>
     .blog-section { background: var(--bg-light-3); padding: 100px 0; }
     .blog-grid {
@@ -71,7 +72,7 @@
     }
     .blog-card:hover .blog-read-link { gap: 8px; }
 
-    /* Featured article */
+    
     .blog-featured {
       background: white;
       border: 1px solid rgba(14,165,233,0.12);
@@ -91,14 +92,14 @@
     .blog-featured-body h2 { font-size: clamp(20px, 2.5vw, 30px); font-weight: 800; color: var(--text-dark); line-height: 1.25; margin-bottom: 14px; letter-spacing: -0.02em; }
     .blog-featured-body p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 26px; }
 
-    /* Topics filter */
+    
     .topics { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
     .topic-btn {
       padding: 8px 20px;
       border: 1.5px solid var(--border-light);
       border-radius: 100px;
       font-family: 'Outfit', sans-serif; font-size: 13.5px; font-weight: 600;
-      color: var(--text-muted); background: white; cursor: none;
+      color: var(--text-muted); background: white; cursor: pointer;
       transition: var(--transition);
     }
     .topic-btn:hover, .topic-btn.active {
@@ -108,11 +109,20 @@
 
     @media(max-width:1024px) { .blog-grid { grid-template-columns: repeat(2,1fr); } .blog-featured { grid-template-columns: 1fr; } .blog-featured .feat-img-wrap { min-height: 240px; } }
     @media(max-width:640px)  { .blog-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } .blog-featured-body { padding: 32px 24px; } }
+    
+    
+    @media(max-width:768px) {
+      .page-hero { min-height: 280px !important; padding: calc(var(--nav-h) + 20px) 0 40px !important; }
+      .blog-section { padding: 40px 0 !important; }
+      .newsletter-section { padding: 40px 0 !important; }
+      footer { padding: 30px 0 20px !important; }
+    }
   </style>
 </head>
 <body>
+<script src="loader.js"></script>
 
-<!-- NAVBAR -->
+
 <nav class="navbar nav-dark" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
@@ -125,7 +135,7 @@
     </ul>
     <div class="nav-actions">
       <a href="signin.html" class="btn-signin">Sign In</a>
-      <a href="get-started.html" class="btn-primary">Get Started</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
     </div>
     <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
@@ -136,13 +146,13 @@
   <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
   <div class="mob-actions">
     <a href="signin.html" class="btn-signin">Sign In</a>
-    <a href="get-started.html" class="btn-primary">Get Started</a>
+    <a href="signup.html" class="btn-primary">Get Started</a>
   </div>
 </div>
 
 
-<!-- HERO WITH BG IMAGE -->
-<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=85')">
+
+<div class="page-hero" style="background-image:url('assets/blog-hero.webp')">
   <div class="page-hero-content container">
     <div class="breadcrumb"><a href="index.html">Home</a> / Blog</div>
     <h1>Stackly <span class="grad-text">Blog</span></h1>
@@ -151,14 +161,14 @@
 </div>
 
 
-<!-- BLOG CONTENT -->
+
 <section class="blog-section">
   <div class="container">
 
-    <!-- Featured Article -->
+    
     <div class="blog-featured slide-left">
       <div class="feat-img-wrap">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85" alt="Smart Home Automation 2026" loading="lazy">
+        <img src="assets/smart-lighting.webp" alt="Smart Home Automation 2026" loading="lazy">
       </div>
       <div class="blog-featured-body">
         <div class="feat-label">
@@ -177,7 +187,7 @@
       </div>
     </div>
 
-    <!-- Topic Filter -->
+    
     <div class="topics reveal">
       <button class="topic-btn active" onclick="setTopic(this)">All Topics</button>
       <button class="topic-btn" onclick="setTopic(this)">Automation</button>
@@ -187,11 +197,11 @@
       <button class="topic-btn" onclick="setTopic(this)">How-To</button>
     </div>
 
-    <!-- Blog Grid -->
+    
     <div class="blog-grid">
 
       <div class="blog-card reveal d1">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Smart Thermostats" loading="lazy"></div>
+        <div class="blog-img-wrap"><img class="blog-img" src="assets/energy-management.webp" alt="Smart Thermostats" loading="lazy"></div>
         <div class="blog-body">
           <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Energy</span>
           <h3>How Smart Thermostats Cut Energy Bills by 40%</h3>
@@ -204,7 +214,7 @@
       </div>
 
       <div class="blog-card reveal d2">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1557318041-1ce374d55ebf?w=600&q=80" alt="Smart Security" loading="lazy"></div>
+        <div class="blog-img-wrap"><img class="blog-img" src="assets/security-system.webp" alt="Smart Security" loading="lazy"></div>
         <div class="blog-body">
           <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</span>
           <h3>Smart Security: Beyond CCTV Cameras</h3>
@@ -217,7 +227,7 @@
       </div>
 
       <div class="blog-card reveal d3">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&q=80" alt="Smart Bedroom" loading="lazy"></div>
+        <div class="blog-img-wrap"><img class="blog-img" src="assets/smart-bedroom.webp" alt="Smart Bedroom" loading="lazy"></div>
         <div class="blog-body">
           <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg> Design</span>
           <h3>Designing the Perfect Smart Bedroom Routine</h3>
@@ -230,7 +240,7 @@
       </div>
 
       <div class="blog-card reveal d1">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80" alt="Voice Control" loading="lazy"></div>
+        <div class="blog-img-wrap"><img class="blog-img" src="assets/smart-home-interior.webp" alt="Voice Control" loading="lazy"></div>
         <div class="blog-body">
           <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg> How-To</span>
           <h3>Getting the Most Out of Voice Control in Your Smart Home</h3>
@@ -243,7 +253,7 @@
       </div>
 
       <div class="blog-card reveal d2">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=600&q=80" alt="Smart Kitchen" loading="lazy"></div>
+        <div class="blog-img-wrap"><img class="blog-img" src="assets/climate-control.webp" alt="Smart Kitchen" loading="lazy"></div>
         <div class="blog-body">
           <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Automation</span>
           <h3>Smart Kitchen Appliances: A Complete 2026 Buying Guide</h3>
@@ -256,7 +266,7 @@
       </div>
 
       <div class="blog-card reveal d3">
-        <div class="blog-img-wrap"><img class="blog-img" src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=600&q=80" alt="Matter Protocol" loading="lazy"></div>
+        <div class="blog-img-wrap"><img class="blog-img" src="assets/matter-protocol.webp" alt="Matter Protocol" loading="lazy"></div>
         <div class="blog-body">
           <span class="blog-tag"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Technology</span>
           <h3>Matter Protocol: Why It Matters for Your Smart Home</h3>
@@ -270,7 +280,7 @@
 
     </div>
 
-    <!-- Load More -->
+    
     <div style="text-align:center;margin-top:52px;" class="fade-up">
       <a href="404.html" class="btn-signin" style="padding:13px 36px;border-radius:var(--radius-btn);font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
         Load More Articles
@@ -282,14 +292,14 @@
 </section>
 
 
-<!-- NEWSLETTER -->
+
 <section class="newsletter-section">
   <div class="newsletter-wrap">
     <span class="section-tag on-dark reveal" style="display:block;margin-bottom:16px;">Stay Updated</span>
     <h2 class="reveal d1">Never Miss an<br><span class="grad-text">Insight</span></h2>
     <p class="reveal d2">Join 5,000+ smart home enthusiasts who get our weekly newsletter — tips, product updates and exclusive offers delivered straight to your inbox.</p>
-    <form class="newsletter-form reveal d3" onsubmit="return false;">
-      <input type="email" placeholder="Enter your email address">
+    <form class="newsletter-form reveal d3" action="404.html" method="GET">
+      <input type="email" placeholder="Enter your email address" required>
       <button type="submit">Subscribe &rarr;</button>
     </form>
     <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:14px;" class="fade-up">No spam, ever. Unsubscribe in one click.</p>
@@ -297,14 +307,14 @@
 </section>
 
 
-<!-- FOOTER -->
+
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand"><a href="index.html" style="display: inline-block;"><img src="assets/logo.webp" alt="Stackly"></a><p>Premium smart home automation engineered for modern living.</p><div class="footer-addr"><strong>MMR Complex,</strong><br>Chinna Thirupathi, near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div></div>
       <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="404.html">Smart Lighting</a></li><li><a href="404.html">Climate Control</a></li><li><a href="404.html">Security</a></li><li><a href="404.html">Energy</a></li></ul></div>
-      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="404.html">Privacy</a></li><li><a href="404.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="signup.html">Get Started</a></li><li><a href="404.html">Privacy</a></li><li><a href="404.html">Terms</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Stackly. All rights reserved.</p>
@@ -318,11 +328,26 @@
   </div>
 </footer>
 
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 <script>
 function setTopic(btn) {
   document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
+  const topic = btn.textContent.trim();
+  const cards = document.querySelectorAll('.blog-card');
+  const featured = document.querySelector('.blog-featured');
+
+  cards.forEach(card => {
+    const tag = card.querySelector('.blog-tag').textContent.trim();
+    if (topic === 'All Topics' || tag.includes(topic)) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+
 }
 </script>
 </body>

@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp" sizes="32x32">
   <title>About Us | Stackly Smart Home Automation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
   <style>
-    /* About-page specific overrides */
+    
     .about-story    { background: var(--bg-light-3); padding: 100px 0; }
     .about-values   { background: white; padding: 100px 0; }
     .about-team     { background: var(--bg-light-3); padding: 100px 0; }
@@ -45,11 +46,19 @@
     .faq-q.open svg { transform:rotate(180deg); }
     .faq-a { padding:0 24px;max-height:0;overflow:hidden;transition:max-height 0.45s ease,padding 0.3s ease;font-size:14.5px;color:var(--text-muted);line-height:1.75; }
     .faq-a.open { max-height:200px;padding:0 24px 20px; }
+    
+    
+    @media(max-width:768px) {
+      .page-hero { min-height: 280px !important; padding: calc(var(--nav-h) + 20px) 0 40px !important; }
+      section { padding: 40px 0 !important; }
+      footer { padding: 30px 0 20px !important; }
+    }
   </style>
 </head>
 <body>
+<script src="loader.js"></script>
 
-<!-- NAVBAR -->
+
 <nav class="navbar nav-dark" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
@@ -62,7 +71,7 @@
     </ul>
     <div class="nav-actions">
       <a href="signin.html" class="btn-signin">Sign In</a>
-      <a href="get-started.html" class="btn-primary">Get Started</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
     </div>
     <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
@@ -73,13 +82,13 @@
   <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
   <div class="mob-actions">
     <a href="signin.html" class="btn-signin">Sign In</a>
-    <a href="get-started.html" class="btn-primary">Get Started</a>
+    <a href="signup.html" class="btn-primary">Get Started</a>
   </div>
 </div>
 
 
-<!-- HERO WITH BG IMAGE -->
-<div class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=85')">
+
+<div class="page-hero" style="background-image:url('assets/smart-lighting.webp')">
   <div class="page-hero-content container">
     <div class="breadcrumb"><a href="index.html">Home</a> / About</div>
     <h1><span class="grad-text">About</span> Stackly</h1>
@@ -88,12 +97,12 @@
 </div>
 
 
-<!-- ABOUT: MISSION / STORY -->
+
 <section class="about-story">
   <div class="container">
     <div class="mission-grid">
       <div class="mission-img slide-left">
-        <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=800&q=85" alt="Smart home interior with Stackly automation">
+        <img src="assets/smart-home-interior.webp" alt="Smart home interior with Stackly automation">
         <div class="mission-badge">
           <strong>5+</strong>
           <span>Years of Excellence</span>
@@ -115,7 +124,7 @@
 </section>
 
 
-<!-- ABOUT: VALUES -->
+
 <section class="about-values">
   <div class="container">
     <div class="section-header">
@@ -171,7 +180,7 @@
 </section>
 
 
-<!-- ABOUT: TEAM -->
+
 <section class="about-team">
   <div class="container">
     <div class="section-header">
@@ -182,7 +191,7 @@
     <div class="team-grid">
       <div class="team-card reveal d1">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Arjun Mehta — CEO & Co-founder" loading="lazy">
+          <img src="assets/team-arjun.webp" alt="Arjun Mehta — CEO & Co-founder" loading="lazy">
           <div class="team-overlay"></div>
         </div>
         <div class="team-body">
@@ -196,7 +205,7 @@
       </div>
       <div class="team-card reveal d2">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Priya Rajan — CTO" loading="lazy">
+          <img src="assets/team-priya.webp" alt="Priya Rajan — CTO" loading="lazy">
           <div class="team-overlay"></div>
         </div>
         <div class="team-body">
@@ -210,7 +219,7 @@
       </div>
       <div class="team-card reveal d3">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Karthik Sundaram — Head of Engineering" loading="lazy">
+          <img src="assets/team-karthik.webp" alt="Karthik Sundaram — Head of Engineering" loading="lazy">
           <div class="team-overlay"></div>
         </div>
         <div class="team-body">
@@ -224,7 +233,7 @@
       </div>
       <div class="team-card reveal d1">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80" alt="Kavitha Nair — Product Designer" loading="lazy">
+          <img src="assets/team-kavitha.webp" alt="Kavitha Nair — Product Designer" loading="lazy">
           <div class="team-overlay"></div>
         </div>
         <div class="team-body">
@@ -241,7 +250,7 @@
 </section>
 
 
-<!-- ABOUT: STATS -->
+
 <section class="about-stats">
   <div class="container">
     <div class="stats-grid">
@@ -254,7 +263,7 @@
 </section>
 
 
-<!-- ABOUT: JOURNEY TIMELINE -->
+
 <section style="background:var(--bg-dark);padding:100px 0;">
   <div class="container">
     <div class="section-header">
@@ -288,7 +297,7 @@
 </section>
 
 
-<!-- ABOUT: FAQ -->
+
 <section style="background:var(--bg-light-3);padding:100px 0;">
   <div class="container">
     <div class="section-header">
@@ -329,7 +338,7 @@
 </section>
 
 
-<!-- FOOTER -->
+
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -342,7 +351,7 @@
       </div>
       <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="404.html">Smart Lighting</a></li><li><a href="404.html">Climate Control</a></li><li><a href="404.html">Security</a></li><li><a href="404.html">Energy</a></li></ul></div>
-      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="404.html">Privacy Policy</a></li><li><a href="404.html">Terms of Service</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="signup.html">Get Started</a></li><li><a href="404.html">Privacy Policy</a></li><li><a href="404.html">Terms of Service</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Stackly. All rights reserved.</p>
@@ -356,7 +365,7 @@
   </div>
 </footer>
 
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 <script>
 function toggleFaq(btn) {
   const ans = btn.nextElementSibling;

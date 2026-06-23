@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp" sizes="32x32">
   <meta name="description" content="Stackly – Premium Smart Home Automation in Salem, Tamil Nadu. AI-powered control, security & energy management.">
   <title>Stackly | Smart Home Automation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Preload critical media immediately (before JS runs) -->
+  <link rel="stylesheet" href="style.css">
+  
   <link rel="preload" href="assets/hero-bg.mp4" as="video" type="video/mp4">
   <link rel="preload" href="assets/logo.webp" as="image" type="image/webp">
   <link rel="preload" href="assets/section 1/frame_001.webp" as="image" type="image/webp">
@@ -17,7 +18,7 @@
   <link rel="preload" href="assets/section 1/frame_003.webp" as="image" type="image/webp">
   <link rel="preload" href="assets/section 2/frame_001.webp" as="image" type="image/webp">
   <script>
-    /* Start downloading scroll frames the instant HTML is parsed */
+    
     (function () {
       window.__stacklyFrameCache = window.__stacklyFrameCache || new Map();
       function queue(path, count) {
@@ -52,8 +53,9 @@
   </style>
 </head>
 <body>
+<script src="loader.js"></script>
 
-<!-- NAVBAR -->
+
 <nav class="navbar nav-transparent" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
@@ -66,7 +68,7 @@
     </ul>
     <div class="nav-actions">
       <a href="signin.html" class="btn-signin">Sign In</a>
-      <a href="get-started.html" class="btn-primary">Get Started</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
     </div>
     <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
@@ -77,12 +79,12 @@
   <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
   <div class="mob-actions">
     <a href="signin.html" class="btn-signin">Sign In</a>
-    <a href="get-started.html" class="btn-primary">Get Started</a>
+    <a href="signup.html" class="btn-primary">Get Started</a>
   </div>
 </div>
 
 
-<!-- ══════ SECTION 1 — HERO ══════ -->
+
 <section id="hero">
   <div class="hero-orb orb-1"></div>
   <div class="hero-orb orb-2"></div>
@@ -98,7 +100,7 @@
     <p class="hero-desc">Stackly brings AI-powered automation to every corner of your home — intuitive, secure and beautifully designed for modern living.</p>
   </div>
   <div class="stable-hero-btns">
-    <a href="get-started.html" class="btn-hero solid">
+    <a href="signup.html" class="btn-hero solid">
       Get Started Free
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
@@ -111,7 +113,7 @@
 </section>
 
 
-<!-- ══════ SECTION 2 — FEATURES ══════ -->
+
 <section id="features">
   <div class="container">
     <div class="section-header">
@@ -146,7 +148,7 @@
 </section>
 
 
-<!-- ══════ SCROLL FRAME ANIMATION — SECTION 3 ══════ -->
+
 <div class="sf-wrapper s1" id="s1-wrapper">
   <div class="sf-sticky" id="s1-sticky">
     <canvas class="sf-canvas" id="s1-canvas" aria-hidden="true"></canvas>
@@ -158,7 +160,7 @@
 
 <div class="glow-divider"></div>
 
-<!-- ══════ SCROLL FRAME ANIMATION — SECTION 4 ══════ -->
+
 <div class="sf-wrapper s2" id="s2-wrapper">
   <div class="sf-sticky" id="s2-sticky">
     <canvas class="sf-canvas" id="s2-canvas" aria-hidden="true"></canvas>
@@ -169,7 +171,7 @@
 </div>
 
 
-<!-- ══════ SECTION 5 — SERVICES ══════ -->
+
 <section id="services">
   <div class="container">
     <div class="section-header">
@@ -179,57 +181,57 @@
     </div>
     <div class="services-grid">
       <div class="svc-card reveal d1">
-        <div class="svc-img-wrap"><img class="svc-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Smart Lighting" loading="lazy"></div>
+        <div class="svc-img-wrap"><img class="svc-img" src="assets/smart-lighting.webp" alt="Smart Lighting" loading="lazy"></div>
         <div class="svc-body">
           <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
           <h3>Smart Lighting</h3>
           <p>Automated lighting that adapts to your mood, time of day and activities. Voice-controlled with millions of colour options.</p>
-          <a href="services.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="404.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-card reveal d2">
-        <div class="svc-img-wrap"><img class="svc-img" src="https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=600&q=80" alt="Climate Control" loading="lazy"></div>
+        <div class="svc-img-wrap"><img class="svc-img" src="assets/climate-control.webp" alt="Climate Control" loading="lazy"></div>
         <div class="svc-body">
           <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></div>
           <h3>Climate Control</h3>
           <p>AI-powered temperature management that learns your preferences and optimises comfort while slashing energy costs.</p>
-          <a href="services.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="404.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-card reveal d3">
-        <div class="svc-img-wrap"><img class="svc-img" src="https://images.unsplash.com/photo-1557318041-1ce374d55ebf?w=600&q=80" alt="Security Systems" loading="lazy"></div>
+        <div class="svc-img-wrap"><img class="svc-img" src="assets/security-system.webp" alt="Security Systems" loading="lazy"></div>
         <div class="svc-body">
           <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           <h3>Security Systems</h3>
           <p>24/7 AI-powered surveillance, smart locks, motion detection and instant smartphone alerts — complete peace of mind.</p>
-          <a href="services.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="404.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-card reveal d1">
-        <div class="svc-img-wrap"><img class="svc-img" src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Energy Management" loading="lazy"></div>
+        <div class="svc-img-wrap"><img class="svc-img" src="assets/energy-management.webp" alt="Energy Management" loading="lazy"></div>
         <div class="svc-body">
           <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <h3>Energy Management</h3>
           <p>Real-time monitoring and automated optimisation of every energy-consuming device to dramatically reduce bills.</p>
-          <a href="services.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="404.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-card reveal d2">
-        <div class="svc-img-wrap"><img class="svc-img" src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=600&q=80" alt="Entertainment Hub" loading="lazy"></div>
+        <div class="svc-img-wrap"><img class="svc-img" src="assets/entertainment-hub.webp" alt="Entertainment Hub" loading="lazy"></div>
         <div class="svc-body">
           <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
           <h3>Entertainment Hub</h3>
           <p>Seamless audio/video automation across every room. Set the perfect ambiance for any occasion with a single tap.</p>
-          <a href="services.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="404.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="svc-card reveal d3">
-        <div class="svc-img-wrap"><img class="svc-img" src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600&q=80" alt="Remote Monitoring" loading="lazy"></div>
+        <div class="svc-img-wrap"><img class="svc-img" src="assets/remote-monitoring.webp" alt="Remote Monitoring" loading="lazy"></div>
         <div class="svc-body">
           <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
           <h3>Remote Monitoring</h3>
           <p>Full remote access and real-time alerts from anywhere in the world. Your home is always just a tap away.</p>
-          <a href="services.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="404.html" class="svc-link">Learn More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
     </div>
@@ -237,7 +239,7 @@
 </section>
 
 
-<!-- ══════ NEW: HOW IT WORKS ══════ -->
+
 <section id="how-it-works">
   <div class="container">
     <div class="section-header">
@@ -275,7 +277,7 @@
 </section>
 
 
-<!-- ══════ NEW: APP SHOWCASE ══════ -->
+
 <section id="app-showcase">
   <div class="container">
     <div class="showcase-grid">
@@ -301,17 +303,17 @@
             Energy usage insights &amp; savings tracker
           </li>
         </ul>
-        <a href="get-started.html" class="btn-primary">Start Free Trial &rarr;</a>
+        <a href="signup.html" class="btn-primary">Start Free Trial &rarr;</a>
       </div>
       <div class="showcase-img slide-right">
-        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=700&q=85" alt="Stackly App on smartphone in a smart home">
+        <img src="assets/smart-home-app.webp" alt="Stackly App on smartphone in a smart home">
       </div>
     </div>
   </div>
 </section>
 
 
-<!-- ══════ SECTION 6 — STATS ══════ -->
+
 <section id="stats">
   <div class="container">
     <div class="section-header">
@@ -329,7 +331,7 @@
 </section>
 
 
-<!-- ══════ SECTION 7 — TESTIMONIALS ══════ -->
+
 <section id="testimonials">
   <div class="container">
     <div class="section-header">
@@ -349,7 +351,7 @@
         <div class="testi-quote">"</div>
         <p class="testi-text">Stackly completely transformed how I interact with my home. The AI automation is incredibly smart — it turns on the AC before I even arrive home. Absolutely love it!</p>
         <div class="testi-author">
-          <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80" alt="Rajesh Kumar" loading="lazy">
+          <img class="testi-avatar" src="assets/team-arjun.webp" alt="Rajesh Kumar" loading="lazy">
           <div class="testi-info"><h4>Rajesh Kumar</h4><span>Homeowner · Chennai</span></div>
         </div>
       </div>
@@ -364,7 +366,7 @@
         <div class="testi-quote">"</div>
         <p class="testi-text">The energy savings alone paid for the entire system in under a year. The security features give me total peace of mind even when I'm travelling for work — highly recommend!</p>
         <div class="testi-author">
-          <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80" alt="Priya Nair" loading="lazy">
+          <img class="testi-avatar" src="assets/team-priya.webp" alt="Priya Nair" loading="lazy">
           <div class="testi-info"><h4>Priya Nair</h4><span>Software Engineer · Bangalore</span></div>
         </div>
       </div>
@@ -379,7 +381,7 @@
         <div class="testi-quote">"</div>
         <p class="testi-text">Installation was seamless and the Stackly team was incredibly helpful throughout. My whole family loves voice-controlling everything — it's like living in the future!</p>
         <div class="testi-author">
-          <img class="testi-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80" alt="Karthik Subramanian" loading="lazy">
+          <img class="testi-avatar" src="assets/team-karthik.webp" alt="Karthik Subramanian" loading="lazy">
           <div class="testi-info"><h4>Karthik Subramanian</h4><span>Business Owner · Coimbatore</span></div>
         </div>
       </div>
@@ -388,7 +390,7 @@
 </section>
 
 
-<!-- ══════ SECTION 8 — CTA ══════ -->
+
 <section id="cta">
   <div class="cta-particle cp1" aria-hidden="true"></div>
   <div class="cta-particle cp2" aria-hidden="true"></div>
@@ -398,7 +400,7 @@
       <h2>Ready to Transform<br><span class="grad-text">Your Home?</span></h2>
       <p>Join thousands of homeowners who trust Stackly for cutting-edge smart home automation. Start your free consultation — no commitment needed.</p>
       <div class="cta-btns">
-        <a href="get-started.html" class="btn-cta solid">Get Started Free &rarr;</a>
+        <a href="signup.html" class="btn-cta solid">Get Started Free &rarr;</a>
         <a href="contact.html" class="btn-cta ghost">Talk to an Expert</a>
       </div>
     </div>
@@ -406,7 +408,7 @@
 </section>
 
 
-<!-- FOOTER -->
+
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -422,7 +424,7 @@
       </div>
       <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div class="footer-col"><h4>Solutions</h4><ul class="footer-links"><li><a href="404.html">Smart Lighting</a></li><li><a href="404.html">Climate Control</a></li><li><a href="404.html">Security Systems</a></li><li><a href="404.html">Energy Management</a></li></ul></div>
-      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="get-started.html">Get Started</a></li><li><a href="404.html">Privacy Policy</a></li><li><a href="404.html">Terms of Service</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="signin.html">Sign In</a></li><li><a href="signup.html">Get Started</a></li><li><a href="404.html">Privacy Policy</a></li><li><a href="404.html">Terms of Service</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Stackly. All rights reserved.</p>
@@ -436,6 +438,6 @@
   </div>
 </footer>
 
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

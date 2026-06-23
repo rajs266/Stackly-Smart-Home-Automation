@@ -1,15 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp" sizes="32x32">
   <title>Page Not Found | Stackly</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="error-body">
+<script src="loader.js"></script>
 
 <section class="error-page">
   <div class="error-inner">
@@ -23,7 +25,7 @@
   </div>
 </section>
 
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 <script>
   document.getElementById('go-back-btn').addEventListener('click', function () {
     if (window.history.length > 1) window.history.back();

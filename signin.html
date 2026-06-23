@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp" sizes="32x32">
   <title>Sign In | Stackly</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       background: #030814;
@@ -55,7 +56,8 @@
     .divider span { font-size: 12px; color: rgba(255,255,255,0.35); white-space: nowrap; }
     .auth-foot { text-align: center; margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.45); }
     .auth-foot a { color: #7dd3fc; }
-    .btn-google {
+    .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .btn-social {
       width: 100%;
       padding: 12px;
       font-size: 14px;
@@ -69,80 +71,236 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      cursor: none;
+      cursor: pointer;
       transition: all 0.3s ease;
     }
-    .btn-google:hover {
+    .btn-social:hover {
       background: rgba(255,255,255,0.08);
       border-color: rgba(255,255,255,0.25);
     }
-    @media(max-width:480px){ .auth-card { padding: 36px 24px; } }
+    .plan-btns { display: flex; gap: 10px; margin-bottom: 22px; }
+    .plan-btn {
+      flex: 1; padding: 14px 10px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.12);
+      background: transparent; color: rgba(255,255,255,0.60); font-family: 'Outfit', sans-serif;
+      font-size: 13.5px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .plan-btn svg { flex-shrink: 0; }
+    .plan-btn.selected, .plan-btn:hover {
+      border-color: #0ea5e9; color: #7dd3fc; background: rgba(14,165,233,0.10);
+    }
+    .plan-label { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .password-wrap { position: relative; }
+    .password-wrap input { width: 100%; padding-right: 44px !important; box-sizing: border-box; }
+    .password-toggle {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(255,255,255,0.45); cursor: pointer;
+      padding: 6px; display: flex; align-items: center; justify-content: center; line-height: 0;
+    }
+    .password-toggle:hover { color: #7dd3fc; }
+    
+    .split-layout { display: flex; width: 100vw; min-height: 100vh; }
+    .split-left {
+      flex: 1.2; background: url('assets/auth_bg.webp') center/cover no-repeat;
+      position: relative; display: flex; flex-direction: column; justify-content: flex-start; padding: 80px 60px;
+    }
+    .split-left::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(3,8,20,0.1) 0%, rgba(3,8,20,0.95) 100%); z-index: 1;
+    }
+    .left-content { position: relative; z-index: 2; color: white; max-width: 500px; }
+    .left-content .auth-logo { margin-bottom: 24px; display: inline-block; }
+    .left-content .auth-logo img { height: 38px; }
+    .left-content h1 { font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .left-content p { font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+    .split-right {
+      flex: 0 0 550px; background: var(--bg-dark); display: flex; flex-direction: column;
+      justify-content: center; align-items: center; padding: 40px; overflow-y: auto;
+    }
+    .auth-card {
+      width: 100%; max-width: 400px; background: none; border: none; padding: 0;
+      box-shadow: none; animation: card-fade 0.6s ease both;
+    }
+    .auth-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .auth-back-home:hover { color: #7dd3fc; }
+    .auth-back-home svg { flex-shrink: 0; }
+
+    @media(max-width:900px){ .split-layout { flex-direction: column; } .split-left { display: none; } .split-right { flex: 1; width: 100%; } }
+    @media(max-width:480px){ .auth-card { padding: 36px 0; } .plan-btns { flex-direction: column; } }
   </style>
 </head>
 <body>
+<script src="loader.js"></script>
 
-<nav class="navbar nav-dark" id="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="assets/logo.webp" alt="Stackly"></a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-actions">
-      <a href="signin.html" class="btn-signin" style="border-color:rgba(14,165,233,0.5);color:#7dd3fc;">Sign In</a>
-      <a href="get-started.html" class="btn-primary">Get Started</a>
+<div class="split-layout">
+  <div class="split-left">
+    <div class="left-content">
+      <a href="index.html" class="auth-logo"><img src="assets/logo.webp" alt="Stackly"></a>
+      <h1 style="margin-top: 20px;">Welcome Back to Stackly</h1>
+      <p style="font-size: 17px; margin-bottom: 36px;">Log in to access your dashboard, view live camera feeds, and manage your smart home security seamlessly from anywhere.</p>
+      
+      <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 20px;">
+        <li style="display: flex; align-items: center; gap: 14px; font-size: 15.5px; color: rgba(255,255,255,0.85); font-weight: 500;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Monitor 24/7 live camera feeds
+        </li>
+        <li style="display: flex; align-items: center; gap: 14px; font-size: 15.5px; color: rgba(255,255,255,0.85); font-weight: 500;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Control smart locks and access logs
+        </li>
+        <li style="display: flex; align-items: center; gap: 14px; font-size: 15.5px; color: rgba(255,255,255,0.85); font-weight: 500;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Receive instant AI threat alerts
+        </li>
+      </ul>
     </div>
-    <button class="hamburger" id="ham-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
-</nav>
+  
+  <div class="split-right">
+    <div class="auth-card">
+      <a href="index.html" class="auth-back-home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Home
+      </a>
+      <h2 style="font-size:28px; margin-bottom:8px; text-align:left;">Sign In</h2>
+      <p class="sub" style="margin-bottom:30px; text-align:left;">Access your Stackly account</p>
 
-<div class="mobile-menu" id="mob-menu">
-  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
-  <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
-  <div class="mob-actions">
-    <a href="signin.html" class="btn-signin">Sign In</a>
-    <a href="get-started.html" class="btn-primary">Get Started</a>
+      <form id="signinForm" novalidate>
+        <div class="plan-label">Select Role</div>
+        <div class="plan-btns" id="roleSelect">
+          <button type="button" class="plan-btn role-btn selected" data-role="customer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Customer
+          </button>
+          <button type="button" class="plan-btn role-btn" data-role="admin">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            Admin
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="si-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-wrap">
+            <input type="password" id="si-pass" placeholder="••••••••" minlength="6" required>
+            <button type="button" class="password-toggle" data-target="si-pass" aria-label="Show password">
+              <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-closed" style="display:none" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="forgot"><a href="404.html">Forgot password?</a></div>
+        <div id="si-error" style="color:#ef4444; font-size:13px; margin-bottom:12px; display:none; text-align:center;"></div>
+        <button type="submit" class="btn-primary" style="width:100%; padding:13px; font-size:15px;">Sign In &rarr;</button>
+      </form>
+
+      <script>
+        document.querySelectorAll('#roleSelect .role-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('#roleSelect .role-btn').forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+          });
+        });
+
+        document.querySelectorAll('.password-toggle').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var input = document.getElementById(btn.dataset.target);
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.querySelector('.eye-open').style.display = show ? 'none' : 'block';
+            btn.querySelector('.eye-closed').style.display = show ? 'block' : 'none';
+            btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+          });
+        });
+
+        document.getElementById('signinForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const errEl = document.getElementById('si-error');
+          errEl.style.display = 'none';
+          
+          const email = document.getElementById('si-email').value.trim();
+          const pass = document.getElementById('si-pass').value;
+          
+          if(!email || !pass) {
+            errEl.textContent = 'Please enter both email and password.';
+            errEl.style.display = 'block';
+            return;
+          }
+          if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errEl.textContent = 'Please enter a valid email address.';
+            errEl.style.display = 'block';
+            return;
+          }
+          if(pass.length < 6) {
+            errEl.textContent = 'Password must be at least 6 characters long.';
+            errEl.style.display = 'block';
+            return;
+          }
+
+          const selectedRoleBtn = document.querySelector('#roleSelect .role-btn.selected');
+          const role = selectedRoleBtn?.dataset.role || 'customer';
+          const displayName = email.split('@')[0]
+            .replace(/[._-]/g, ' ')
+            .replace(/\b\w/g, (c) => c.toUpperCase());
+
+          const user = {
+            name: displayName,
+            email: email,
+            role: role,
+            loggedIn: true
+          };
+
+          localStorage.setItem('stackly_user', JSON.stringify(user));
+          sessionStorage.setItem('stackly_user', JSON.stringify(user));
+          sessionStorage.removeItem('stackly_auth');
+
+          window.location.href = role === 'admin'
+            ? 'admin-dashboard.html'
+            : 'customer-dashboard.html';
+        });
+      </script>
+
+      <div class="divider"><span>or continue with</span></div>
+
+      <div class="social-btns">
+        <button class="btn-social btn-google">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Google
+        </button>
+
+        <button class="btn-social btn-facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2">
+            <path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/>
+          </svg>
+          Facebook
+        </button>
+      </div>
+
+      <div class="auth-foot" style="text-align:left;">Don't have an account? <a href="signup.html">Get Started Free</a></div>
+    </div>
   </div>
 </div>
 
-<div class="auth-page">
-  <div class="auth-card">
-    <a href="index.html" class="auth-logo" style="display:inline-block;"><img src="assets/logo.webp" alt="Stackly"></a>
-    <h2>Welcome Back</h2>
-    <p class="sub">Sign in to your Stackly account</p>
-
-    <form>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="your@email.com">
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" placeholder="••••••••">
-      </div>
-      <div class="forgot"><a href="404.html">Forgot password?</a></div>
-      <button type="submit" class="btn-primary" style="width:100%; padding:13px; font-size:15px;">Sign In &rarr;</button>
-    </form>
-
-    <div class="divider"><span>or continue with</span></div>
-
-    <button class="btn-google">
-      <svg width="18" height="18" viewBox="0 0 24 24">
-        <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-        <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-        <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-        <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-      </svg>
-      Continue with Google
-    </button>
-
-    <div class="auth-foot">Don't have an account? <a href="get-started.html">Get Started Free</a></div>
-  </div>
-</div>
-
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
